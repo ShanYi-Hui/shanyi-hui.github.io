@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>MySQL数据类型选取 | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">MySQL数据类型选取</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">MySQL数据类型选取</h1><div class="post-meta"><a href="/2020/01/02/数据库/MySQL数据类型选取/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2020/01/02/数据库/MySQL数据类型选取/"></i>留言,<i id="changyan_parti_unit" data-xid="2020/01/02/数据库/MySQL数据类型选取/"></i>参与</a><p><span class="date">Jan 02, 2020</span><span><a href="/categories/后端/" class="category">后端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;合适的数据类型，可以让你的数据库纵想丝般顺滑。</p>
+<h2 id="三大选取原则"><a href="#三大选取原则" class="headerlink" title="三大选取原则"></a>三大选取原则</h2><ul>
+<li>越小越好：数据类型越小，占用磁盘、内存和 CPU 就越少，处理速度就越快；</li>
+<li>越简单越好：数据类型越简单，需要的 CPU 周期就越少；</li>
+<li>避免 NULL：可为NULL的列使得索引、索引统计和值比较都更复杂，同时也会使用更多的存储空间。</li>
+</ul>
+<h2 id="数据类型选取步骤"><a href="#数据类型选取步骤" class="headerlink" title="数据类型选取步骤"></a>数据类型选取步骤</h2><h3 id="选择数据大类"><a href="#选择数据大类" class="headerlink" title="选择数据大类"></a>选择数据大类</h3><p>根据数据先分好大类，是数值类型、日期和时间类型 还是 字符串类型。</p>
+<h3 id="了解数据特性"><a href="#了解数据特性" class="headerlink" title="了解数据特性"></a>了解数据特性</h3><p>数据大类 OK 之后，再细分具体数据类型。</p>
+<ul>
+<li>长度是否固定；</li>
+<li>是否区分符号；</li>
+<li>判断取值范围；</li>
+</ul>
+<h2 id="数据类型详表"><a href="#数据类型详表" class="headerlink" title="数据类型详表"></a>数据类型详表</h2><h3 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">大小</th>
+<th align="center">范围（有符号）</th>
+<th align="center">范围（无符号）</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TINYINT</td>
+<td align="center">1 字节</td>
+<td align="center">(-128，127)</td>
+<td align="center">(0，255)</td>
+<td align="center">小整数值</td>
+</tr>
+<tr>
+<td align="center">SMALLINT</td>
+<td align="center">2 字节</td>
+<td align="center">(-32 768，32 767)</td>
+<td align="center">(0，65 535)</td>
+<td align="center">大整数值</td>
+</tr>
+<tr>
+<td align="center">MEDIUMINT</td>
+<td align="center">3 字节</td>
+<td align="center">(-8 388 608，8 388 607)</td>
+<td align="center">(0，16 777 215)</td>
+<td align="center">大整数值</td>
+</tr>
+<tr>
+<td align="center">INT或INTEGER</td>
+<td align="center">4 字节</td>
+<td align="center">(-2 147 483 648，2 147 483 647)</td>
+<td align="center">(0，4 294 967 295)</td>
+<td align="center">大整数值</td>
+</tr>
+<tr>
+<td align="center">BIGINT</td>
+<td align="center">8 字节</td>
+<td align="center">(-9,223,372,036,854,775,808，9 223 372 036 854 775 807)</td>
+<td align="center">(0，18 446 744 073 709 551 615)</td>
+<td align="center">极大整数值</td>
+</tr>
+<tr>
+<td align="center">FLOAT</td>
+<td align="center">4 字节</td>
+<td align="center">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td align="center">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+<td align="center">单精度,浮点数值</td>
+</tr>
+<tr>
+<td align="center">DOUBLE</td>
+<td align="center">8 字节</td>
+<td align="center">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="center">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="center">双精度,浮点数值</td>
+</tr>
+<tr>
+<td align="center">DECIMAL</td>
+<td align="center">对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
+<td align="center">依赖于M和D的值</td>
+<td align="center">依赖于M和D的值</td>
+<td align="center">小数值</td>
+</tr>
+</tbody></table>
+<h3 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">大小(字节)</th>
+<th align="center">范围</th>
+<th align="center">格式</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DATE</td>
+<td align="center">3</td>
+<td align="center">1000-01-01/9999-12-31</td>
+<td align="center">YYYY-MM-DD</td>
+<td align="center">日期值</td>
+</tr>
+<tr>
+<td align="center">TIME</td>
+<td align="center">3</td>
+<td align="center">‘-838:59:59’/‘838:59:59’</td>
+<td align="center">HH:MM:SS</td>
+<td align="center">时间值或持续时间</td>
+</tr>
+<tr>
+<td align="center">YEAR</td>
+<td align="center">1</td>
+<td align="center">1901/2155</td>
+<td align="center">YYYY</td>
+<td align="center">年份值</td>
+</tr>
+<tr>
+<td align="center">DATETIME</td>
+<td align="center">8</td>
+<td align="center">1000-01-01 00:00:00/9999-12-31 23:59:59</td>
+<td align="center">YYYY-MM-DD HH:MM:SS</td>
+<td align="center">混合日期和时间值</td>
+</tr>
+<tr>
+<td align="center">TIMESTAMP</td>
+<td align="center">4</td>
+<td align="center">1970-01-01 00:00:00/2038 结束时间是第 2147483647 秒，北京时间 2038-1-19 11:14:07，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
+<td align="center">YYYYMMDD HHMMSS</td>
+<td align="center">混合日期和时间值，时间戳</td>
+</tr>
+</tbody></table>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">大小</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">CHAR</td>
+<td align="center">0-255字节</td>
+<td align="center">定长字符串</td>
+</tr>
+<tr>
+<td align="center">VARCHAR</td>
+<td align="center">0-65 535 字节</td>
+<td align="center">变长字符串</td>
+</tr>
+<tr>
+<td align="center">TINYBLOB</td>
+<td align="center">0-255字节</td>
+<td align="center">不超过 255 个字符的二进制字符串</td>
+</tr>
+<tr>
+<td align="center">TINYTEXT</td>
+<td align="center">0-255字节</td>
+<td align="center">短文本字符串</td>
+</tr>
+<tr>
+<td align="center">BLOB</td>
+<td align="center">0-65 535字节</td>
+<td align="center">二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td align="center">TEXT</td>
+<td align="center">0-65 535字节</td>
+<td align="center">长文本数据</td>
+</tr>
+<tr>
+<td align="center">MEDIUMBLOB</td>
+<td align="center">0-16 777 215字节</td>
+<td align="center">二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td align="center">MEDIUMTEXT</td>
+<td align="center">0-16 777 215字节</td>
+<td align="center">中等长度文本数据</td>
+</tr>
+<tr>
+<td align="center">LONGBLOB</td>
+<td align="center">0-4 294 967 295字节</td>
+<td align="center">二进制形式的极大文本数据</td>
+</tr>
+<tr>
+<td align="center">LONGTEXT</td>
+<td align="center">0-4 294 967 295字节</td>
+<td align="center">极大文本数据</td>
+</tr>
+</tbody></table>
+<h2 id="相似数据类型差异"><a href="#相似数据类型差异" class="headerlink" title="相似数据类型差异"></a>相似数据类型差异</h2><h3 id="TINYINT-1-与-TINYINT-2"><a href="#TINYINT-1-与-TINYINT-2" class="headerlink" title="TINYINT(1) 与 TINYINT(2)"></a>TINYINT(1) 与 TINYINT(2)</h3><p>TINYINT(1) 相当于 BOOLEAN，值为 0 时相当于 false，非 0 时为 true，数值类型像TINYINT(1) 与 TINYINT(2) 括号中的数字并不代表存储长度，只有勾选了<code>ZF</code>时才会有作用，即“zero fill”，长度不够时左边用 0 填充。</p>
+<h3 id="INT-与-INTEGER"><a href="#INT-与-INTEGER" class="headerlink" title="INT 与 INTEGER"></a>INT 与 INTEGER</h3><p>没有差异，如果非得要一个差异的话，那它们名字不一样长···</p>
+<h3 id="CHAR-与-VARCHAR"><a href="#CHAR-与-VARCHAR" class="headerlink" title="CHAR 与 VARCHAR"></a>CHAR 与 VARCHAR</h3><p>CHAR 是定长字符串，VARCHAR 是变长字符串，当存储“abcd”时，CHAR(8) 所占长度依然是 8，后面补 4 个空格，而 VARCHAR(8) 所占长度会变成 4，字符串类型括号中的数字表示的是最多显示多少位字符，CHAR 比 VARCHAR 的查询速度快。 </p>
+<h3 id="VARCHAR-与-TEXT"><a href="#VARCHAR-与-TEXT" class="headerlink" title="VARCHAR 与 TEXT"></a>VARCHAR 与 TEXT</h3><p>Mysql 5.0.3 版本之前，其存储大小为 0~255 字节，5.0.3 版本之后已经和 TEXT 的存储大小相同了，VARCHAR在保存的时候，不进行填充，当值保存和检索时尾部的空格仍保留。TEXT列不能有默认值，存储或检索过程中，不存在大小写转换。可以用 VARCHAR 就用 VARCHAR，不知道长度时用 TEXT，VARCHAR 比 TEXT 的查询速度快。</p>
+<h2 id="常见字段对应数据类型及字段标识"><a href="#常见字段对应数据类型及字段标识" class="headerlink" title="常见字段对应数据类型及字段标识"></a>常见字段对应数据类型及字段标识</h2><p>仅做参考，业务需求不同，所对应的数据类型与字段类型标识须适当修改。</p>
+<h3 id="用户信息表"><a href="#用户信息表" class="headerlink" title="用户信息表"></a>用户信息表</h3><p>用户表常用字段与数据类型对应关系如下：</p>
+<ul>
+<li><strong>uid：</strong><code>INT</code>类型，最多可支持 4 294 967 295 位用户的 ID。勾选字段标识：PK、NN、UN、AI；</li>
+<li><strong>账号：</strong><code>VARCHAR(10)</code>类型，长度不定的字符串，使用变长字符串，用户 ID 最多为 10 位，因此账号 10 位字符就完全够用了。勾选字段标识：NN；</li>
+<li><strong>密码：</strong><code>VARCHAR(16)</code>类型，长度不定的字符串，使用变长字符串，最多可存储 16 位字符的密码。勾选字段标识：NN；</li>
+<li><strong>邮箱：</strong><code>VARCHAR(128)</code>类型，长度不定的字符串，使用变长字符串，邮箱超过 128 位字符的请绕道走开，为什么不用 π 去做邮箱呢？勾选字段标识：NN；</li>
+<li><strong>手机号：</strong><code>CHAR(11)</code>类型，长度固定，使用定长字符串，如果存在区号，再单独建一个表，如果你存在国际用户，<code>VARCHAR(11)</code>也是不错的，国际手机号长度没有 11 位，毕竟中国人口这么多 11 位也就搞定了。还有为什么 BIGINT 容量与速度上最优却不用，防止碰坑（like 索引会失效，你懂得的php手机号变4294967295，手机号格式验证较字符串复杂等其他意外，大家都不喜欢在赶项目的时候查 bug 吧···）。勾选字段标识：NN；</li>
+<li><strong>创建时间：</strong><code>TIMESTAMP</code>类型，值以 UTC 格式保存，时区转化 ，存储时对当前的时区进行转换，检索时再转换回当前的时区，值范围不能早于1970或晚于2038，大小是 DATETIME 的一半，如果仅需存取日期、时间、或年份，那么 DATE、TIME 和 YEAR 才是你的菜。勾选字段标识：不用勾，添加默认值为 CURRENT_TIMESTAMP；</li>
+<li><strong>权限级别：</strong><code>TINYINT(1)</code>类型，不同级别用不同的 1 位数字去表示，范围0 ~ 255 种权限够吗？勾选字段标识：NN、UN，默认值为 5（0，1，2，3，4，5对应6个级别）；</li>
+<li><strong>昵称：</strong><code>VARCHAR(16)</code>类型，长度不定的字符串，使用变长字符串，16 位字符的昵称已经够骚了气了···勾选字段标识：NN，用户未填写可默认使用账号字段下的值；</li>
+<li><strong>性别：</strong><code>TINYINT(1)</code>类型，不写括号时，默认为<code>TINYINT(4)</code>，0 代表女性，1 代表男性，2 代表双性，3 代表未填写（数字用的还是很合理的），勾选字段标识：NN，默认值为 3；</li>
+<li><strong>出生日期：</strong><code>DATETIME</code>类型，以’YYYY-MM-DD HH:MM:SS’格式检索和显示DATETIME值，应该没有 999 年出生的或者 10000 年出生的吧，TIMESTAMP 的日期范围不能早与 1970 年，不符合业务需求，毕竟 1970 年前的用户也是有的（不是大佬就是领导···）。勾选字段标识：不用勾；</li>
+<li><strong>爱好：</strong><code>VARCHAR(64)</code>类型，长度不定的字符串，使用变长字符串，64 位字符，稍微表达下自己喜欢的就行了。勾选字段标识：不用勾；</li>
+<li><strong>个性签名：</strong><code>VARCHAR(256)</code>类型，长度不定的字符串，使用变长字符串，256 位字符就够个性了，比 TEXT 查询速度快。勾选字段标识：不用勾。</li>
+</ul>
+<h4 id="SQL-语句参考"><a href="#SQL-语句参考" class="headerlink" title="SQL 语句参考"></a>SQL 语句参考</h4><p>expension 字段为预留字段。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`sumblog`</span>.<span class="string">`user`</span> </span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`uid`</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">FIRST</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`phone`</span> <span class="built_in">CHAR</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`email`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`class`</span> <span class="built_in">TINYINT</span>(<span class="number">1</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">5</span> <span class="keyword">AFTER</span> <span class="string">`create_time`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`nickname`</span> <span class="built_in">VARCHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`class`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`sex`</span> <span class="built_in">TINYINT</span>(<span class="number">1</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">3</span> <span class="keyword">AFTER</span> <span class="string">`nickname`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`birthday`</span> DATETIME <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`sex`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`expansion1`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`birthday`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`expansion2`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`expansion1`</span>,</span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`expansion3`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`expansion2`</span>,</span><br><span class="line"><span class="keyword">CHANGE</span> <span class="keyword">COLUMN</span> <span class="string">`password`</span> <span class="string">`password`</span> <span class="built_in">VARCHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`username`</span>,</span><br><span class="line"><span class="keyword">CHANGE</span> <span class="keyword">COLUMN</span> <span class="string">`username`</span> <span class="string">`username`</span> <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> ,</span><br><span class="line"><span class="keyword">CHANGE</span> <span class="keyword">COLUMN</span> <span class="string">`email`</span> <span class="string">`email`</span> <span class="built_in">VARCHAR</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> ,</span><br><span class="line"><span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span> (<span class="string">`uid`</span>);</span><br><span class="line">;</span><br></pre></td></tr></table></figure></div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2020/01/02/数据库/MySQL数据类型选取/">http://huishanyi.club/2020/01/02/数据库/MySQL数据类型选取/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/数据库/">数据库</a><a href="/tags/MySQL/">MySQL</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/01/09/系统分析师/系统分析师介绍/" class="pre">系统分析师介绍</a><a href="/2019/12/24/数据库/MySQL安装建库建表/" class="next">MySQL安装建库建表</a></div><div id="comments"><div id="SOHUCS" sid="2020/01/02/数据库/MySQL数据类型选取/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#三大选取原则"><span class="toc-text">三大选取原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型选取步骤"><span class="toc-text">数据类型选取步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#选择数据大类"><span class="toc-text">选择数据大类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解数据特性"><span class="toc-text">了解数据特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型详表"><span class="toc-text">数据类型详表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数值类型"><span class="toc-text">数值类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期和时间类型"><span class="toc-text">日期和时间类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串类型"><span class="toc-text">字符串类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相似数据类型差异"><span class="toc-text">相似数据类型差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TINYINT-1-与-TINYINT-2"><span class="toc-text">TINYINT(1) 与 TINYINT(2)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#INT-与-INTEGER"><span class="toc-text">INT 与 INTEGER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CHAR-与-VARCHAR"><span class="toc-text">CHAR 与 VARCHAR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VARCHAR-与-TEXT"><span class="toc-text">VARCHAR 与 TEXT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见字段对应数据类型及字段标识"><span class="toc-text">常见字段对应数据类型及字段标识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户信息表"><span class="toc-text">用户信息表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SQL-语句参考"><span class="toc-text">SQL 语句参考</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>

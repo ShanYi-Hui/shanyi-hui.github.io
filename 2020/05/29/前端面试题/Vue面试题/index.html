@@ -1,0 +1,474 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>Vue面试题 | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Vue面试题</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Vue面试题</h1><div class="post-meta"><a href="/2020/05/29/前端面试题/Vue面试题/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2020/05/29/前端面试题/Vue面试题/"></i>留言,<i id="changyan_parti_unit" data-xid="2020/05/29/前端面试题/Vue面试题/"></i>参与</a><p><span class="date">May 29, 2020</span><span><a href="/categories/前端/" class="category">前端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;本片文章将会每周不定期更新不定数量面试题，毕竟质量才是关键。<br>&emsp;&emsp;实践是检验真理的唯一标准！看题不记题，看题要做题！<br>&emsp;&emsp;面试是一个学习交流的过程，抱着虚心求教的心，人无完人，祝你变得更优秀！</p>
+<h2 id="1-Vue-中-Key-的理解"><a href="#1-Vue-中-Key-的理解" class="headerlink" title="1. Vue 中 Key 的理解"></a>1. Vue 中 Key 的理解</h2><p><strong>作用</strong></p>
+<ul>
+<li>key 是虚拟 DOM 中的唯一标识<ul>
+<li>使 Diff 算法更快的找到对应的节点，从而提高 Diff 的运行效率<ul>
+<li>Vue 存在<code>就地更新</code>策略，默认是高效的，当该策略不产生副作用时，建议不要使用 key，这样可以取得更好的性能【只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出。】</li>
+<li>有相同父元素的子元素必须有独特的 key</li>
+</ul>
+</li>
+<li>保证相同标签名元素的过度切换（使 Vue 可以区分，否则只会替换其内部属性而不会触发过渡效果）</li>
+</ul>
+</li>
+</ul>
+<p><strong>场景</strong></p>
+<ul>
+<li><p>完整地触发组件的生命周期钩子</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- text 变化就会重新渲染，diff 依靠 key 识别是否为新元素 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">transition</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">:key</span>=<span class="string">"text"</span>&gt;</span>&#123;&#123; text &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>触发过渡效果</p>
+</li>
+</ul>
+<p><strong>原理</strong></p>
+<ul>
+<li>采用 Diff 算法</li>
+<li>通过 patchVnode 方法对比新旧 vnode（深度优先，同层比较）</li>
+<li>通过 updateChildren 方法更新（首尾交叉对比）</li>
+</ul>
+<p><strong>分析方法</strong></p>
+<ul>
+<li><p>下载源码</p>
+</li>
+<li><p>写个小例子打断点找到源码位置（比如写个列表）</p>
+</li>
+<li><p>源码位置：<code>src/core/vdompatch.js</code></p>
+<ul>
+<li><p>patchVnode 函数（Diff 发生的地方）</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">patchVnode</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    oldVnode,</span></span></span><br><span class="line"><span class="function"><span class="params">    vnode,</span></span></span><br><span class="line"><span class="function"><span class="params">    insertedVnodeQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">    ownerArray,</span></span></span><br><span class="line"><span class="function"><span class="params">    index,</span></span></span><br><span class="line"><span class="function"><span class="params">    removeOnly</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (oldVnode === vnode) &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isDef(vnode.elm) &amp;&amp; isDef(ownerArray)) &#123;</span><br><span class="line">        <span class="comment">// clone reused vnode</span></span><br><span class="line">        vnode = ownerArray[index] = cloneVNode(vnode)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> elm = vnode.elm = oldVnode.elm</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isTrue(oldVnode.isAsyncPlaceholder)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isDef(vnode.asyncFactory.resolved)) &#123;</span><br><span class="line">        hydrate(oldVnode.elm, vnode, insertedVnodeQueue)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        vnode.isAsyncPlaceholder = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>updateChildren 函数</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateChildren</span> (<span class="params">parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> oldStartIdx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> newStartIdx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> oldEndIdx = oldCh.length - <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> oldStartVnode = oldCh[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> oldEndVnode = oldCh[oldEndIdx]</span><br><span class="line">    <span class="keyword">let</span> newEndIdx = newCh.length - <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> newStartVnode = newCh[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> newEndVnode = newCh[newEndIdx]</span><br><span class="line">    <span class="keyword">let</span> oldKeyToIdx, idxInOld, vnodeToMove, refElm</span><br><span class="line"></span><br><span class="line">    <span class="comment">// removeOnly is a special flag used only by &lt;transition-group&gt;</span></span><br><span class="line">    <span class="comment">// to ensure removed elements stay in correct relative positions</span></span><br><span class="line">    <span class="comment">// during leaving transitions</span></span><br><span class="line">    <span class="keyword">const</span> canMove = !removeOnly</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>) &#123;</span><br><span class="line">        checkDuplicateKeys(newCh)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isUndef(oldStartVnode)) &#123;</span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx] <span class="comment">// Vnode has been moved left</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isUndef(oldEndVnode)) &#123;</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123;</span><br><span class="line">            patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx)</span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx]</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newEndVnode)) &#123;</span><br><span class="line">            patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx)</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">            newEndVnode = newCh[--newEndIdx]</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newEndVnode)) &#123; <span class="comment">// Vnode moved right</span></span><br><span class="line">            patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx)</span><br><span class="line">            canMove &amp;&amp; nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm))</span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx]</span><br><span class="line">            newEndVnode = newCh[--newEndIdx]</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newStartVnode)) &#123; <span class="comment">// Vnode moved left</span></span><br><span class="line">            patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx)</span><br><span class="line">            canMove &amp;&amp; nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm)</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (isUndef(oldKeyToIdx)) oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx)</span><br><span class="line">            idxInOld = isDef(newStartVnode.key)</span><br><span class="line">            ? oldKeyToIdx[newStartVnode.key]</span><br><span class="line">            : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx)</span><br><span class="line">            <span class="keyword">if</span> (isUndef(idxInOld)) &#123; <span class="comment">// New element</span></span><br><span class="line">            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, <span class="literal">false</span>, newCh, newStartIdx)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            vnodeToMove = oldCh[idxInOld]</span><br><span class="line">            <span class="keyword">if</span> (sameVnode(vnodeToMove, newStartVnode)) &#123;</span><br><span class="line">                patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue, newCh, newStartIdx)</span><br><span class="line">                oldCh[idxInOld] = <span class="literal">undefined</span></span><br><span class="line">                canMove &amp;&amp; nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// same key but different element. treat as new element</span></span><br><span class="line">                createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, <span class="literal">false</span>, newCh, newStartIdx)</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (oldStartIdx &gt; oldEndIdx) &#123;</span><br><span class="line">        refElm = isUndef(newCh[newEndIdx + <span class="number">1</span>]) ? <span class="literal">null</span> : newCh[newEndIdx + <span class="number">1</span>].elm</span><br><span class="line">        addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newStartIdx &gt; newEndIdx) &#123;</span><br><span class="line">        removeVnodes(oldCh, oldStartIdx, oldEndIdx)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Vue-中-Diff-算法的理解"><a href="#2-Vue-中-Diff-算法的理解" class="headerlink" title="2. Vue 中 Diff 算法的理解"></a>2. Vue 中 Diff 算法的理解</h2><p><strong>作用</strong></p>
+<ul>
+<li>Diff 算法是为虚拟 DOM 的框架而生的，可以精确定位所改变的元素使组件更新更加准确与快速</li>
+<li>源码 mountComponent 函数中，可以看出每挂载一个组件就会产生一个新  Watcher，为了保证 Vue 组件更新的准确性，采用 Diff 也就可以理解了</li>
+<li>Diff 算法比较方式：深度优先，同层比较</li>
+<li>触发时机：数据响应式触发 setter =&gt; setter 会触发通知 =&gt; 通知的方式就是将 watcher 添加到异步更新队列 =&gt; 事件循环结束则清空队列（watcher 执行他们的更新函数） =&gt; 更新函数执行时调用组件渲染函数和组件的更新函数 =&gt; 重新渲染最新的 VDom =&gt; 组件实例执行更新函数</li>
+<li>打补丁：新旧 VDom 对比就叫做 patch</li>
+</ul>
+<p><strong>分析方法</strong></p>
+<ul>
+<li>源码位置：<code>src/instance/lifecycle.js</code><ul>
+<li>mountComponent 函数<ul>
+<li>每个组件都有一个 watcher，为了精确的更新，Diff 算法就很有必要了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>源码位置：<code>src/core/vdompatch.js</code><ul>
+<li>patchVnode 函数（深度优先，同层比较，Diff 发生的地方，源码见1）</li>
+<li>updateChildren 函数（首位交叉对比，算法核心，源码见1）</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-MVC、MVP、MVVM-的理解"><a href="#3-MVC、MVP、MVVM-的理解" class="headerlink" title="3. MVC、MVP、MVVM 的理解"></a>3. MVC、MVP、MVVM 的理解</h2><p>共同点：解决代码杂糅问题。<br>区别：MVP 是 MVC2.0，MVVM 是 MVC3.0。</p>
+<ul>
+<li>Web 1.0 时代<ul>
+<li>早期开发，前后端未分离。虽然开发快，但代码较混乱（jsp，php，.net）。业务逻辑越复杂，单文件代码量越大，项目越难维护；</li>
+<li>MVC 的诞生就是解决这一些问题，将项目拆分成 Model、View 和 Controller 三大部分。<ul>
+<li>Model：保存应用数据，与后端数据进行同步；</li>
+<li>View：将 Model 中的数据可视化，用户可在此进行操作；</li>
+<li>Controler：业务逻辑，根据用户操作修改 Model 中的数据。</li>
+<li>MVC 刚诞生时仅用于后端，比如 spring、Structs 等框架，前端只是 View 部分（前端输出静态页面交给后端，后端人员使用模板语法做整合）。</li>
+<li>优点<ul>
+<li>低耦合</li>
+<li>可复用</li>
+<li>易维护</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>增加系统结构，实现较复杂，需要考虑代码功能划分，最好用于大点的项目，否则得不偿失；</li>
+<li>View 与 Controller 联系过于紧密。拆分不够完全，很难独立复用；</li>
+<li>View 对 Model 的低效率访问。Model 中接口不同，View 可能需要多次调用才能拿全数据；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Web 2.0 时代<ul>
+<li>Google 的 Gmail 出现，伴生的 ajax 可使前后台进行交互；</li>
+<li>前后端分离，前端专注 HTML、CSS、JS，后端专注数据服务，协同开发，效率提高；</li>
+<li>前端通过 ajax 拥有了使页面局部刷新的能力，减轻了后端的负载和流量消耗，用户体验更佳；</li>
+<li>专职前端出现，页面内容越来越多，前端代码量变大，项目难维护。</li>
+</ul>
+</li>
+<li>MVP 模式<ul>
+<li>Model：提供数据；</li>
+<li>View：负责显示；</li>
+<li>Presenter：负责 Model 与 View 之间的通信；</li>
+<li>MVC 衍变而来。</li>
+<li>优点<ul>
+<li>View 与 Model 完全隔离；</li>
+<li>Presenter 与 View 具体实现技术无关。</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>增加了代码复杂度</li>
+<li>Presenter 中除了有 Controller 代码，还有大量 Model 与 View 的手动同步逻辑代码，难维护；</li>
+<li>Presenter 与 View 的耦合度较高。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Web 3.0 时代<ul>
+<li>前端 MVC 模式出现（将后端 MVC 中的 V 拆为前端的 MVC）；</li>
+<li>前端 MVVM 模式出现（Angular、React、Vue）。<ul>
+<li>Model-View-ViewModel</li>
+<li>优点<ul>
+<li>低耦合</li>
+<li>可重用</li>
+<li>独立开发</li>
+<li>可测试（测试 viewModel）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-Vue-设计原则（理念）"><a href="#4-Vue-设计原则（理念）" class="headerlink" title="4. Vue 设计原则（理念）"></a>4. Vue 设计原则（理念）</h2><ul>
+<li>渐进式 JavaScript 框架；<ul>
+<li>自底向上逐层应用（有着足够庞大的生态去应对多种需求，无论是简单的静态页，还是需要路由跳转，更或者全局状态管理都可以满足）；</li>
+<li>核心库（DeclarativeRendering、ComponsentSystem）只关注视图层。</li>
+</ul>
+</li>
+<li>易用：没有学习过 Vue，只要你是前端，看着开发文档就可以上手，学习曲线很平滑，模板语法太友善了；</li>
+<li>灵活：渐进式，可以是构建用户界面的 JavaScript 库，也可以是一套完整的框架；</li>
+<li>高效：Vue2 引入了虚拟 DOM 和 Diff 算法，Vue3 引入 Proxy 对数据响应式改进。</li>
+</ul>
+<h2 id="5-Vue-组件化的理解"><a href="#5-Vue-组件化的理解" class="headerlink" title="5. Vue 组件化的理解"></a>5. Vue 组件化的理解</h2><p><strong>定义</strong></p>
+<ul>
+<li>将复杂系统解耦，拆分成多个功能模块，并根据业务进行重组复用；</li>
+<li>组件化其实就是一个做积木搭积木的过程；</li>
+<li>Vue 的核心特性之一。</li>
+</ul>
+<p><strong>使用场景</strong><br>页面元素多样，业务逻辑复杂，功能模块可拆分。</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>功能复用，协同开发，提高开发效率；</li>
+<li>单元测试；</li>
+<li>可针对指定组件进行更新，提高性能(<code>lifecycle.js - mountComponent()</code>，一个组件一个 watcher)；</li>
+<li>扩展性高。</li>
+</ul>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>组件应该是高内聚、低耦合的（任性复用）；</li>
+<li>合理的拆分组件才能将组件化的优点最大化；</li>
+<li>数据传递时尽量遵循单向数据流原则，避免关系混乱。</li>
+</ul>
+<p><strong>Vue 组件化特点</strong></p>
+<ul>
+<li>声明组件：Vue.component()；</li>
+<li>单文件组件（vue-loader 将 template 编译成 render 函数）；</li>
+<li>组件配置 =&gt; VDOM =&gt; DOM；（通过 <code>patch.js - createElm()</code> 实例化及挂载）</li>
+<li>属性 prop；</li>
+<li>自定义事件；</li>
+<li>插槽；</li>
+<li>双向数据绑定。</li>
+</ul>
+<h2 id="6-Vue-组件之间的通讯方式"><a href="#6-Vue-组件之间的通讯方式" class="headerlink" title="6. Vue 组件之间的通讯方式"></a>6. Vue 组件之间的通讯方式</h2><p><strong>父子组件</strong></p>
+<ul>
+<li>父组件向子组件传值<ul>
+<li>props</li>
+<li>ref（直接访问 DOM 元素）</li>
+<li>$children（做封装后使用，避免依赖 DOM）</li>
+</ul>
+</li>
+<li>子组件向父组件传值<ul>
+<li>$emit / $on</li>
+<li>$parent（做封装后使用，避免依赖 DOM）</li>
+</ul>
+</li>
+</ul>
+<p><strong>兄弟组件</strong></p>
+<ul>
+<li>$parent</li>
+<li>$root</li>
+<li>eventbus</li>
+<li>vuex</li>
+</ul>
+<p><strong>跨层级关系</strong></p>
+<ul>
+<li>eventbus</li>
+<li>$attrs / $listeners（在子组件中处理非属性值的传递）</li>
+<li>provide/inject（单向，祖辈向后代传值）</li>
+<li>vuex</li>
+</ul>
+<h2 id="7-Vue-组件模板只能有一个根元素"><a href="#7-Vue-组件模板只能有一个根元素" class="headerlink" title="7. Vue 组件模板只能有一个根元素"></a>7. Vue 组件模板只能有一个根元素</h2><ul>
+<li>实例化 Vue 创建组件时，el 选项只能定一个根元素（入口）；</li>
+<li>单文件组件为一个 Vue 实例，一个 Vue 实例只能定一个根元素；</li>
+<li>Diff 算法比较时需要有相同的根。</li>
+</ul>
+<h2 id="8-Vue-组件中-data-选项必须为函数而根实例无此限制"><a href="#8-Vue-组件中-data-选项必须为函数而根实例无此限制" class="headerlink" title="8. Vue 组件中 data 选项必须为函数而根实例无此限制"></a>8. Vue 组件中 data 选项必须为函数而根实例无此限制</h2><ul>
+<li>Vue 组件<ul>
+<li>官网有说明<strong>当在组件中使用 data property 的时候 (除了 new Vue 外的任何地方)，它的值必须是返回一个对象的函数</strong>；</li>
+<li>Vue 组件中的 data 不是函数时无法通过 Vue 检测，提示需要将 data 改为函数；</li>
+<li>Vue 组件可能存在多个实例；<ul>
+<li>以对象形式定义 data 会导致它们公用一个 data 从而产生数据污染；</li>
+<li>以函数形式定义 data，由于函数的闭包特性，不会产生数据污染；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Vue 根实例<ul>
+<li>根实例只有一个，不会产生数据污染，所以没限制，也不需要做这种限制。</li>
+</ul>
+</li>
+</ul>
+<h2 id="9-v-if-和-v-for-优先级"><a href="#9-v-if-和-v-for-优先级" class="headerlink" title="9. v-if 和 v-for 优先级"></a>9. v-if 和 v-for 优先级</h2><ul>
+<li>官网有说明<code>v-for</code>比<code>v-if</code>具有更高的优先级；</li>
+<li>写个<code>v-for</code>和<code>v-if</code>同级的情况，打印下<code>app.$options.render</code>，看下渲染函数；</li>
+<li>源码<code>src/compiler/codegen/index.js</code> genElement() 函数中判断条件<code>for</code>是高于<code>if</code>的；</li>
+<li>如果两个条件需要同时作用，可以先将<code>v-if</code>提到<code>v-for</code>的上层，减少每次循环都做判断导致的性能消耗；</li>
+<li>如果<code>v-for</code>和<code>v-if</code>必须作用在一个标签上，那就应该考虑列表数组中数据的筛选了，<code>v-for</code>作用的应该是渲染数组（这么理解的话，就不会产生<code>v-for</code>和<code>v-if</code>必须作用在一个标签上的情况）。</li>
+</ul>
+<h2 id="10-vue-router-中保护指定路由的安全"><a href="#10-vue-router-中保护指定路由的安全" class="headerlink" title="10. vue-router 中保护指定路由的安全"></a>10. vue-router 中保护指定路由的安全</h2><p>通过导航守卫（钩子函数）在路由跳转时先判断条件（是否登录，是否有权限）再决定是否跳转</p>
+<ul>
+<li>全局守卫<ul>
+<li>触发时机：全局有导航发生时</li>
+<li>无法获取组件实例</li>
+<li>全局前置守卫（beforeEach(to, from, next)）<ul>
+<li>to：目标路由</li>
+<li>from：当前路由</li>
+<li>next：高阶函数，处理传过来的参数，返回一个设置的 hook 来决定导航后续该怎么做<ul>
+<li>不传参：正常放行</li>
+<li>传参<ul>
+<li>next(false)：未登录、无权限时阻止导航</li>
+<li>next(path)：传递 path 字符串可以重定向到一个新地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>全局解析守卫（beforeResolve(to, from, next)）</li>
+<li>全局后置钩子（afterEach(to, from)）</li>
+</ul>
+</li>
+<li>路由独享守卫（beforeEnter(to, from, next)）<ul>
+<li>触发时机：发生与当前路由相关的导航时</li>
+<li>无法获取组件实例</li>
+</ul>
+</li>
+<li>组件内的守卫<ul>
+<li>触发时机：用到当前组件时</li>
+<li>可以获取组件实例</li>
+<li>beforeRouteEnter(to, from, next)<ul>
+<li>导航确认前调用</li>
+<li>不能获取组件实例 <code>this</code></li>
+<li>组件实例还没被创建</li>
+</ul>
+</li>
+<li>beforeRouteUpdate(to, from, next)<ul>
+<li>导航更新时调用（例如：复用组件时，路径由<code>test/01</code>跳转至<code>test/02</code>时，就会调用此函数）</li>
+</ul>
+</li>
+<li>beforeRouteLeave(to, from, next)<ul>
+<li>导航离开前调用（例如：填完表单还未保存就离开，执行此函数让用户进行确认是否离开）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>导航解析流程：</p>
+<ol>
+<li>导航被触发。</li>
+<li>在失活的组件里调用 beforeRouteLeave 守卫。</li>
+<li>调用全局的 beforeEach 守卫。</li>
+<li>在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。</li>
+<li>在路由配置里调用 beforeEnter。</li>
+<li>解析异步路由组件。</li>
+<li>在被激活的组件里调用 beforeRouteEnter。</li>
+<li>调用全局的 beforeResolve 守卫 (2.5+)。</li>
+<li>导航被确认。</li>
+<li>调用全局的 afterEach 钩子。</li>
+<li>触发 DOM 更新。</li>
+<li>用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。</li>
+</ol>
+<h2 id="11-nextTick-的理解"><a href="#11-nextTick-的理解" class="headerlink" title="11. nextTick 的理解"></a>11. nextTick 的理解</h2><p><strong>定义</strong><br>nextTick 是 Vue 的一个全局 API，由于 Vue 的异步更新策略导致我们对数据的直接修改不会立刻体现在 DOM 中，在这种情况下使用 nextTick 方法即可解决。</p>
+<p><strong>作用</strong><br>由于 Vue 在更新 DOM 时是异步执行。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。nextTick 方法会在队列中加入一个回调函数，确保函数在前面的 DOM 操作完成后调用。</p>
+<p><strong>使用方法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;div id=<span class="string">"example"</span>&gt;&#123;&#123;message&#125;&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">var vm = new Vue(&#123;</span></span><br><span class="line"><span class="regexp">  el: '#example',</span></span><br><span class="line"><span class="regexp">  data: &#123;</span></span><br><span class="line"><span class="regexp">    message: '123'</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;)</span></span><br><span class="line"><span class="regexp">vm.message = 'new message' /</span><span class="regexp">/ 更改数据</span></span><br><span class="line"><span class="regexp">vm.$el.textContent === 'new message' /</span><span class="regexp">/ DOM 未更新</span></span><br><span class="line"><span class="regexp">Vue.nextTick(function () &#123;</span></span><br><span class="line"><span class="regexp">  vm.$el.textContent === 'new message' /</span><span class="regexp">/ DOM 更新</span></span><br><span class="line"><span class="regexp">&#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span>*********************************************************<span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 组件内使用</span></span><br><span class="line"><span class="regexp">Vue.component('example', &#123;</span></span><br><span class="line"><span class="regexp">  template: '&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/</span>span&gt;<span class="string">',</span></span><br><span class="line"><span class="string">  data: function () &#123;</span></span><br><span class="line"><span class="string">    return &#123;</span></span><br><span class="line"><span class="string">      message: '</span>未更新<span class="string">'</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  methods: &#123;</span></span><br><span class="line"><span class="string">    updateMessage: function () &#123;</span></span><br><span class="line"><span class="string">      this.message = '</span>已更新<span class="string">'</span></span><br><span class="line"><span class="string">      console.log(this.$el.textContent) // 未更新</span></span><br><span class="line"><span class="string">      this.$nextTick(function () &#123;</span></span><br><span class="line"><span class="string">        console.log(this.$el.textContent) // 已更新</span></span><br><span class="line"><span class="string">      &#125;)</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/********************************************************/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">// 作为一个 Promise 使用 (2.1.0 起新增)</span></span><br><span class="line"><span class="string">Vue.nextTick()</span></span><br><span class="line"><span class="string">  .then(function () &#123;</span></span><br><span class="line"><span class="string">    // DOM 更新了</span></span><br><span class="line"><span class="string">  &#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>原理</strong><br>将我们传入 nextTick 中的函数加入到 callbacks 里，然后使用 timerFunc 函数异步调用，Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(fn, 0) 代替。</p>
+<h2 id="12-Vue-的响应式"><a href="#12-Vue-的响应式" class="headerlink" title="12. Vue 的响应式"></a>12. Vue 的响应式</h2><p><strong>定义</strong><br>监听数据变化（更改数据） 并 作出响应（更新 DOM）。</p>
+<p><strong>作用</strong><br>MVVM 框架中解决的一个核心问题就是连接数据层和视图层，通过数据驱动应用，数据变化，视图更新，数据响应式处理就是为了解决这个问题。</p>
+<p><strong>原理</strong></p>
+<p><strong>优缺点</strong></p>
+<ul>
+<li>优点<ul>
+<li>只操作数据，不用频繁的操作 DOM，既降低了开发难度，又提升了开发效率（Diff 算法）</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>初始化时递归遍历会造成性能损失</li>
+</ul>
+</li>
+</ul>
+<p><strong>Vue3 中响应式的新变化</strong></p>
+<h2 id="13-Vue-性能优化"><a href="#13-Vue-性能优化" class="headerlink" title="13. Vue 性能优化"></a>13. Vue 性能优化</h2><p><strong>路由懒加载</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">    routes: [</span><br><span class="line">        &#123;<span class="attr">path</span>:<span class="string">'/foo'</span>, <span class="attr">component</span>: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'.Foo.vue'</span>)&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>keep-alive缓存页面</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">keep-alive</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">keep-live</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>合理的利用v-show替换v-if</strong><br>v-show 的原理是使用 display 属性实现的隐藏显示，v-if 的原理是删除创建，所以你懂得<del>~</del></p>
+<p><strong>v-for与v-if同级时</strong><br>官方文档建议在同时需要使用 v-for 和 v-if 时，把 v-if 提到外层，避免每次循环都进行条件判断，但是有时业务逻辑就需要你在循环项做判断，我们可以使用 computed 对需遍历数组先过滤一遍。</p>
+<p><strong>长列表做虚拟滚动</strong><br>使用 vue-virtual-scroller 对长列表进行区域渲染(DOM 复用，只对内容进行更新)。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">recycle-scroller</span></span></span><br><span class="line"><span class="tag">    <span class="attr">class</span>=<span class="string">"items"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:items</span>=<span class="string">"items"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:item-size</span>=<span class="string">"24"</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot</span>=<span class="string">"&#123;items&#125;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">FetchItemView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:item</span>=<span class="string">"item"</span></span></span><br><span class="line"><span class="tag">            @<span class="attr">vote</span>=<span class="string">"voteItem(item)"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">recycle-scroller</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>订阅后要在组件销毁时取消订阅</strong><br>Vue 组件销毁时，会自动解绑它的全部指令及事件监听器，但是仅限于组件本身的事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">created() &#123;</span><br><span class="line">    <span class="keyword">this</span>.timer = setInterval(<span class="keyword">this</span>.refresh, <span class="number">2000</span>)</span><br><span class="line">&#125;,</span><br><span class="line">beforeDestroy() &#123;</span><br><span class="line">    <span class="comment">// 取消订阅防止内存泄漏</span></span><br><span class="line">    clearInterval(<span class="keyword">this</span>.timer)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>图片懒加载</strong><br>图片过多时，使用 vue-lazyload 仅加载当前可视区域的图片。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">v-lazy</span>=<span class="string">"/static/img/1.png"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第三方库做按需引入策略</strong><br>项目开发中仅依赖第三方库中的部分组件或方法，按需引入避免体积过大。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button, Select &#125; <span class="keyword">from</span> <span class="string">'element-ui'</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>无状态组件标记为函数时组件</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">functional</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cell"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">"props.value"</span> <span class="attr">class</span>=<span class="string">"on"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">section</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">"off"</span>&gt;</span><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">        props: [<span class="string">'value'</span>]</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>子组件分割</strong><br>对组件内部渲染频繁的部分进行拆分，使其单独管理自身渲染，减少不必要的渲染。</p>
+<p><strong>变量本地化</strong><br>频繁调用的数据存储为变量，减少引用次数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="keyword">this</span>.a;</span><br><span class="line"><span class="keyword">let</span> b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">1000</span>; i++) &#123;</span><br><span class="line">    b = b + a</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> b;</span><br></pre></td></tr></table></figure>
+
+<h2 id="14-Vue3-新特性"><a href="#14-Vue3-新特性" class="headerlink" title="14. Vue3 新特性"></a>14. Vue3 新特性</h2><ul>
+<li>更快<ul>
+<li>虚拟 DOM 重写<ul>
+<li>组件快速路径（Component fast path）</li>
+<li>单个调用（Monomorphic calls）</li>
+<li>子节点类型检测（Children type detection）</li>
+</ul>
+</li>
+<li>优化 slots 生成</li>
+<li>静态树提升</li>
+<li>静态属性提升</li>
+<li>基于 Proxy 的响应式系统</li>
+</ul>
+</li>
+<li>更小<ul>
+<li>通过摇树优化核心库体积</li>
+</ul>
+</li>
+<li>更易维护<ul>
+<li>TypeScript + 模块化</li>
+</ul>
+</li>
+<li>更加友好<ul>
+<li>跨平台：编译器核心和运行时核心与平台无关，使 Vue 更容易在多平台使用</li>
+</ul>
+</li>
+<li>更易使用<ul>
+<li>改进对 TypeScript 的支持，编辑器可以提供更明确地类型检查和错误警告</li>
+<li>更好的调试支持</li>
+<li>独立的响应化模块</li>
+<li>Composition API</li>
+</ul>
+</li>
+</ul>
+<p>理解才能更好的使用！</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2020/05/29/前端面试题/Vue面试题/">http://huishanyi.club/2020/05/29/前端面试题/Vue面试题/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/前端面试题/">前端面试题</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/05/29/前端面试题/NodeJS面试题/" class="pre">NodeJS面试题</a><a href="/2020/05/29/前端面试题/React面试题/" class="next">React面试题</a></div><div id="comments"><div id="SOHUCS" sid="2020/05/29/前端面试题/Vue面试题/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Vue-中-Key-的理解"><span class="toc-text">1. Vue 中 Key 的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Vue-中-Diff-算法的理解"><span class="toc-text">2. Vue 中 Diff 算法的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-MVC、MVP、MVVM-的理解"><span class="toc-text">3. MVC、MVP、MVVM 的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Vue-设计原则（理念）"><span class="toc-text">4. Vue 设计原则（理念）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Vue-组件化的理解"><span class="toc-text">5. Vue 组件化的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Vue-组件之间的通讯方式"><span class="toc-text">6. Vue 组件之间的通讯方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Vue-组件模板只能有一个根元素"><span class="toc-text">7. Vue 组件模板只能有一个根元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Vue-组件中-data-选项必须为函数而根实例无此限制"><span class="toc-text">8. Vue 组件中 data 选项必须为函数而根实例无此限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-v-if-和-v-for-优先级"><span class="toc-text">9. v-if 和 v-for 优先级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-vue-router-中保护指定路由的安全"><span class="toc-text">10. vue-router 中保护指定路由的安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-nextTick-的理解"><span class="toc-text">11. nextTick 的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-Vue-的响应式"><span class="toc-text">12. Vue 的响应式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-Vue-性能优化"><span class="toc-text">13. Vue 性能优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-Vue3-新特性"><span class="toc-text">14. Vue3 新特性</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>

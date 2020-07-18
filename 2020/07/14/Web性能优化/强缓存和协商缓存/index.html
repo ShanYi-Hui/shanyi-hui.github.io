@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>强缓存和协商缓存 | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">强缓存和协商缓存</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">强缓存和协商缓存</h1><div class="post-meta"><a href="/2020/07/14/Web性能优化/强缓存和协商缓存/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2020/07/14/Web性能优化/强缓存和协商缓存/"></i>留言,<i id="changyan_parti_unit" data-xid="2020/07/14/Web性能优化/强缓存和协商缓存/"></i>参与</a><p><span class="date">Jul 14, 2020</span><span><a href="/categories/Web性能优化/" class="category">Web性能优化</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;缓存是什么？为什么要做缓存？常见的缓存机制有哪些？缓存是如何工作的？</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>这里讨论的缓存为浏览器缓存。通过复用以前获取的资源来提高网站性能。 </p>
+<h2 id="缓存优点"><a href="#缓存优点" class="headerlink" title="缓存优点"></a>缓存优点</h2><ul>
+<li>减少对服务器的访问次数，减轻服务器压力；</li>
+<li>节省带宽；</li>
+<li>再次访问时提高了访问速度，提升了用户体验。</li>
+</ul>
+<h2 id="强缓存（本地缓存）"><a href="#强缓存（本地缓存）" class="headerlink" title="强缓存（本地缓存）"></a>强缓存（本地缓存）</h2><p>强制使用缓存方案，直接使用本地缓存，不与服务器通讯。成功状态码为 200。</p>
+<h3 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h3><p>由 header 中的两个字段控制，分别为 expires 和 cache-control。</p>
+<ul>
+<li>expires（截止日期，http1.0规范）：客户端时间在截止日期之前的时间，都直接使用本地缓存（本地已存在缓存，客户端时间与服务器时间有偏差时，可能导致缓存失效）；</li>
+<li>cache-control（缓存控制，优先级高于expires，http1.1规范）<ul>
+<li>max-age=value：value 表示资源的最大有效时间的“秒数”，如果最新一次请求时间还小于资源第一次请求时间加上这个 value，则使用本地缓存，不会因为客户端时间与服务器时间有偏差而导致缓存失效；</li>
+<li>public：表示客户端和代理服务器（如CDN）都可以缓存；</li>
+<li>private（默认值）：表示只有客户端可以缓存；</li>
+<li>no-cache：客户端缓存内容，但是是否使用缓存需要经过协商缓存来验证决定；</li>
+<li>no-store：所有内容都不会被缓存，即不使用强缓存，也不使用协商缓存；</li>
+<li>must-revalidate：如果缓存的内容失效，请求必须发送到服务器/代理以进行重新验证。</li>
+</ul>
+</li>
+</ul>
+<h2 id="弱缓存（协商缓存）"><a href="#弱缓存（协商缓存）" class="headerlink" title="弱缓存（协商缓存）"></a>弱缓存（协商缓存）</h2><p>强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程。成功状态码为 304。</p>
+<h3 id="控制-1"><a href="#控制-1" class="headerlink" title="控制"></a>控制</h3><p>由请求头中的 If-Modified-Since 和 If-None-Match 与响应头对应的 Last-Modified 和 ETag 来控制（必须成对使用才有效果）。</p>
+<h3 id="Last-Modify-If-Modified-Since"><a href="#Last-Modify-If-Modified-Since" class="headerlink" title="Last-Modify/If-Modified-Since"></a>Last-Modify/If-Modified-Since</h3><p><strong>过程</strong></p>
+<ul>
+<li>第一次请求时，在 response header 中返回 Last-Modify，表示最后一次修改时间；</li>
+<li>下次请求是，request header 中包含 If-Modify-Since，去询问服务器是不是还是上次那个最后修改时间；</li>
+<li>如果还是上次的一样的时间，那么说明数据没有更新，服务端返回 304，浏览器直接从缓存中获取就行了；</li>
+<li>如果不是上次不是上次的时间了，那么就返回数据，同时返回 Last-Modify。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>Last-Modified 保存的是绝对时间，并且是精确到秒，所以如果资源在1秒内修改了多次的话，那就无法识别；</li>
+<li>对于文件只改变了修改时间，内容不变，这时候也会使缓存失效，其实这个时候我们是不希望客户端重新请求的；</li>
+<li>某些服务器不能精确的得到文件的最后修改时间。</li>
+</ul>
+<h3 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h3><p>这两个值是由服务器生成的资源唯一表示字符串，只要资源有变化这个值就会变化。判断过程同上，不同的是当服务器返回 304 时，由于 ETag 重新生成过，response header 中还是会将 ETag 返回，即使和原来的是一样的。</p>
+<p><strong>优点</strong><br>除缓存的优点外，还解决了 Last-Modify/If-Modified-Since 的缺点。</p>
+<p><strong>缺点</strong><br>ETag虽然能解决问题，但也并非完美，ETag 每次服务端生成都需要进行读写操作（因为要生成 hash），而 Last-Modified 只需要读取操作，ETag 消耗更大一些。</p>
+<h3 id="同时使用"><a href="#同时使用" class="headerlink" title="同时使用"></a>同时使用</h3><p>Last-Modified 与 ETag 一起使用时，服务器会优先验证 ETag，一致的情况下，才会继续比对 Last-Modified，最后才决定是否返回 304。</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2020/07/14/Web性能优化/强缓存和协商缓存/">http://huishanyi.club/2020/07/14/Web性能优化/强缓存和协商缓存/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/Web性能优化/">Web性能优化</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/07/15/Web安全/XSS攻击/" class="pre">XSS攻击</a><a href="/2020/07/13/JS/JS操作字符串/" class="next">JS操作字符串</a></div><div id="comments"><div id="SOHUCS" sid="2020/07/14/Web性能优化/强缓存和协商缓存/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存优点"><span class="toc-text">缓存优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#强缓存（本地缓存）"><span class="toc-text">强缓存（本地缓存）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制"><span class="toc-text">控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱缓存（协商缓存）"><span class="toc-text">弱缓存（协商缓存）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#控制-1"><span class="toc-text">控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Last-Modify-If-Modified-Since"><span class="toc-text">Last-Modify/If-Modified-Since</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETag-If-None-Match"><span class="toc-text">ETag/If-None-Match</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同时使用"><span class="toc-text">同时使用</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>

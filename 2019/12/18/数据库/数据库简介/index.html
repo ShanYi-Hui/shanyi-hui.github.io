@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>数据库简介 | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数据库简介</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">数据库简介</h1><div class="post-meta"><a href="/2019/12/18/数据库/数据库简介/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2019/12/18/数据库/数据库简介/"></i>留言,<i id="changyan_parti_unit" data-xid="2019/12/18/数据库/数据库简介/"></i>参与</a><p><span class="date">Dec 18, 2019</span><span><a href="/categories/后端/" class="category">后端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;数据库（database）是“按照数据结构来组织、存储和管理数据的仓库”。<br>&emsp;&emsp;数据库供应用程序使用，但却彼此独立。数据库最基本的操作便是增、删、改、查。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>数据库是存放数据的仓库，仓库中的数据是按照一定的规则进行存放的，否则查询数据时效率很低。数据库既是一个实体（仓库），又是一种方法（高效管理数据）。</p>
+</blockquote>
+<h2 id="数据库管理系统"><a href="#数据库管理系统" class="headerlink" title="数据库管理系统"></a>数据库管理系统</h2><p>数据库管理系统（Database Management System，简称：DBMS）是为管理数据库而设计的电脑软件系统，一般具有数据库的存储、截取、安全保障、备份等基础功能，并且可对数据库中的数据进行增、删、改、查等操作。<br>顺便提下关系数据库管理系统（Relational Database Management System，简称：RDBMS），就是管理关系数据库的数据库管理系统。</p>
+<h2 id="数据库设计步骤"><a href="#数据库设计步骤" class="headerlink" title="数据库设计步骤"></a>数据库设计步骤</h2><ol>
+<li>需求分析：了解应用程序将涉及的所有实体及实体所拥有的属性和特点（时效性、核心数据、增长情况等），尽可能避免修改或重构数据结构；</li>
+<li>概念结构设计（方法如下）：整理需求，得到一个独立于具体 DBMS 的概念模型（用 E-R 图表示）；<ul>
+<li>自上而下：定义全局概念结构框架，然后不断细化；</li>
+<li>自下而上：定义局部概念结构，然后将局部概念结构连起来，得到全局概念结构；</li>
+<li>逐步扩张：定义核心概念结构，然后往外扩张，得到全局概念结构；</li>
+<li>混合策略：结合自上而下与自下而上得到全局概念结构。</li>
+</ul>
+</li>
+<li>逻辑结构设计：选择适用于应用程序的 DBMS，并将概念结构转换为该 DBMS 所支持的数据模型（例如：关系模型）；</li>
+<li>物理结构设计：利用已选用 DBMS 所提供的技术和方法，对逻辑结构进行分析，得到一个高效、可实现的物理数据结构（存储结构、存取路径、存储位置及存储分配俱佳）；</li>
+<li>数据库验证：将数据入库，并运行一些典型的应用任务来验证数据库设计的正确性和合理性；</li>
+<li>数据库运行与维护：验证通过后，即可投入正式运行，并在数据库运行过程中不断调整、修改与完善。</li>
+</ol>
+<h2 id="数据库设计原则"><a href="#数据库设计原则" class="headerlink" title="数据库设计原则"></a>数据库设计原则</h2><ul>
+<li>一对一原则：遵循一对一关系设计原则，避免出现干扰数据影响设计；</li>
+<li>独特命名原则：减少数据库设计过程中重复命名和规范命名现象出现而导致的命名冲突，利于规范化后台代码工作的开展；</li>
+<li>双向使用原则：包括事务使用原则和索引功能原则,保证数据可以及时更新及灵活排序。</li>
+</ul>
+<h2 id="数据库类型"><a href="#数据库类型" class="headerlink" title="数据库类型"></a>数据库类型</h2><p>数据库分为两大类：关系型数据库 与 非关系型数据库。</p>
+<h3 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h3><p>以关系模型（二维表的形式表示实体和实体间联系的数据模型）来组织数据的数据库。</p>
+<h4 id="常见的关系型数据库"><a href="#常见的关系型数据库" class="headerlink" title="常见的关系型数据库"></a>常见的关系型数据库</h4><p>Oracle、DB2、MySQL、Microsoft SQL Server、Microsoft Access</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>成熟：专业的团队负责，且有维护工具和充足的资料；</li>
+<li>标准化：基本都遵循 SQL（结构化查询语言，Structured Query Language），统一的标准，学一个库，会多个库；</li>
+<li>安全：存储在磁盘中，不会因断电等原因导致数据丢失；</li>
+<li>稳定：先定义数据结构，再根据结构进行数据存储，且遵循 ACDI（原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability））规则；</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>付费：有专业的团队负责，隶属于公司，那么想使用或全功能使用，就避免不了付费（不是有破解版吗？你猜库会出问题吗<code>·^_^·</code>?）；</li>
+<li>响应较慢：数据存储在磁盘中，非关系型数据库存储在内存中，所以响应速度较非关系型数据库会慢；</li>
+<li>拓展性差：拓展往往会带来新的表，而关系型数据库的瓶颈就是多表操作；</li>
+<li>浪费空间：由于以二维表进行存储，则存在空字段时也须分配空间。</li>
+</ul>
+<h3 id="非关系型数据库"><a href="#非关系型数据库" class="headerlink" title="非关系型数据库"></a>非关系型数据库</h3><p>NoSQL（Not Only SQL），不是关系型数据库的数据库。</p>
+<h4 id="常见非关系型数据库"><a href="#常见非关系型数据库" class="headerlink" title="常见非关系型数据库"></a>常见非关系型数据库</h4><table>
+<thead>
+<tr>
+<th align="center">分类</th>
+<th align="center">代表库</th>
+<th align="center">应用场景</th>
+<th align="center">数据模型</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">键值（key-value）</td>
+<td align="center">Tokyo Cabinet/Tyrant， Redis， Voldemort， Oracle BDB</td>
+<td align="center">内容缓存，主要用于处理大量数据的高访问负载，也用于一些日志系统等等。</td>
+<td align="center">Key 指向 Value 的键值对，通常用 hash table来实现</td>
+<td align="center">查找速度快</td>
+<td align="center">数据无结构化，通常只被当作字符串或者二进制数据</td>
+</tr>
+<tr>
+<td align="center">列存储数据库</td>
+<td align="center">Cassandra， HBase， Riak</td>
+<td align="center">分布式的文件系统</td>
+<td align="center">以列簇式存储，将同一列数据存在一起</td>
+<td align="center">查找速度快，可扩展性强，更容易进行分布式扩展</td>
+<td align="center">功能相对局限</td>
+</tr>
+<tr>
+<td align="center">文档型数据库</td>
+<td align="center">CouchDB， MongoDb</td>
+<td align="center">Web应用（与Key-Value类似，Value是结构化的，不同的是数据库能够了解Value的内容）</td>
+<td align="center">Key-Value对应的键值对，Value为结构化数据</td>
+<td align="center">数据结构要求不严格，表结构可变，不需要像关系型数据库一样需要预先定义表结构</td>
+<td align="center">查询性能不高，而且缺乏统一的查询语法。</td>
+</tr>
+<tr>
+<td align="center">图形(Graph)数据库</td>
+<td align="center">Neo4J， InfoGrid， Infinite Graph</td>
+<td align="center">社交网络，推荐系统等。专注于构建关系图谱</td>
+<td align="center">图结构</td>
+<td align="center">利用图结构相关算法。比如最短路径寻址，N度关系查找等</td>
+<td align="center">很多时候需要对整个图做计算才能得出需要的信息，而且这种结构不太好做分布式的集群方案。</td>
+</tr>
+</tbody></table>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>免费：通常采用开源的方式，比如 HBase，MongoDb等；</li>
+<li>响应快：数据存储在内存中；</li>
+<li>拓展性好：采用分布式存储；</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>不成熟：开源产品，维护的工具和资料有限；</li>
+<li>无统一标准：不提供 SQL 语句支持；</li>
+<li>不安全： 数据存储在内存中，断电就很尴尬啊；</li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2019/12/18/数据库/数据库简介/">http://huishanyi.club/2019/12/18/数据库/数据库简介/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/数据库/">数据库</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/12/24/数据库/MySQL安装建库建表/" class="pre">MySQL安装建库建表</a><a href="/2019/12/09/NodeJS/启动Node项目报错/" class="next">启动Node项目报错</a></div><div id="comments"><div id="SOHUCS" sid="2019/12/18/数据库/数据库简介/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库管理系统"><span class="toc-text">数据库管理系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库设计步骤"><span class="toc-text">数据库设计步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库设计原则"><span class="toc-text">数据库设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库类型"><span class="toc-text">数据库类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关系型数据库"><span class="toc-text">关系型数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见的关系型数据库"><span class="toc-text">常见的关系型数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点"><span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非关系型数据库"><span class="toc-text">非关系型数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见非关系型数据库"><span class="toc-text">常见非关系型数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-1"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-1"><span class="toc-text">缺点</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>

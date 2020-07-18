@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>ESLint | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ESLint</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">ESLint</h1><div class="post-meta"><a href="/2020/03/04/代码规范/ESLint/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2020/03/04/代码规范/ESLint/"></i>留言,<i id="changyan_parti_unit" data-xid="2020/03/04/代码规范/ESLint/"></i>参与</a><p><span class="date">Mar 04, 2020</span><span><a href="/categories/前端/" class="category">前端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;ESLint 是一个开源的、提供插件化的 javascript 代码检测工具，初衷是为了让程序员可以创建自己的检测规则。它内置了一些流行代码规则，也可以自定义代码规则，让你的代码更加规范，使团队的代码更加统一。<br>&emsp;&emsp;ESLint 由 Nicholas C. Zakas 于2013年6月创建。若需详细了解 ESLint，请浏览 <a href="https://eslint.org/" target="_blank">ESLint 官方文档</a>，<a href="https://eslint.bootcss.com/" target="_blank">ESLint 汉化文档</a>。</p>
+<h2 id="为什么要使用-ESLint-？"><a href="#为什么要使用-ESLint-？" class="headerlink" title="为什么要使用 ESLint ？"></a>为什么要使用 ESLint ？</h2><ul>
+<li>统一团队代码，减少沟通成本；</li>
+<li>插拔式代码规则，自由选取；</li>
+<li>配置简单，快速实用。</li>
+</ul>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>支持 ESLint 插件的编辑器（VSCode、Sublime、Atom、WebStorm···）</li>
+<li>Node v5.2.0+(主版本号已经是两位数了，老旧版本没必要重提，此类版本保证了 npx 的正常使用)</li>
+</ul>
+<h2 id="React-项目配置-ESLint"><a href="#React-项目配置-ESLint" class="headerlink" title="React 项目配置 ESLint"></a>React 项目配置 ESLint</h2><ol>
+<li>进入项目根目录；</li>
+<li>运行<code>npx eslint --init</code>初始化；<ul>
+<li>How would you like to use ESLint? <ul>
+<li>To check syntax, find problems, and enforce code style</li>
+</ul>
+</li>
+<li>What type of modules does your project use?<ul>
+<li>JavaScript modules (import/export)</li>
+</ul>
+</li>
+<li>Which framework does your project use?<ul>
+<li>React</li>
+</ul>
+</li>
+<li>Does your project use TypeScript? (y/N)<ul>
+<li>N（取决于你是否使用TypeScript）</li>
+</ul>
+</li>
+<li>Where does your code run?（多选，空格选取，回车确定，取决于你的项目运行环境）<ul>
+<li>（*）Browser（空格后括号中会出现 *）</li>
+<li>（*）Node</li>
+</ul>
+</li>
+<li>How would you like to define a style for your project?<ul>
+<li>Use a popular style guide（使用主流代码风格，==推荐==）</li>
+<li>Answer questions about your style（问答形式生成代码风格）</li>
+<li>Inspect your JavaScript file(s)（检查已有 JS 文件生成代码风格）</li>
+</ul>
+</li>
+<li>Which style guide do you want to follow?（上一步选择的是主流代码风格）<ul>
+<li>Airbnb: <a href="https://github.com/airbnb/javascript" target="_blank" rel="noopener">https://github.com/airbnb/javascript</a> （推荐，97.6k star）</li>
+<li>Standard: <a href="https://github.com/standard/standard" target="_blank" rel="noopener">https://github.com/standard/standard</a> （24k star）</li>
+<li>Google: <a href="https://github.com/google/eslint-config-google" target="_blank" rel="noopener">https://github.com/google/eslint-config-google</a> （1.3k star）</li>
+</ul>
+</li>
+<li>What format do you want your config file to be in? （生成的 ESLint 配置文件格式）<ul>
+<li>JavaScript（个人习惯）</li>
+<li>YAML</li>
+<li>JSON</li>
+</ul>
+</li>
+<li>Would you like to install them now with npm? <ul>
+<li>Y（安装依赖）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ESLint 初始化完成，项目根目录将生成<code>.eslintrc.js</code>文件（配置代码规则）。</li>
+<li>进行编辑器配置，以 VSCode 为例，安装 ESLint 插件即可。</li>
+<li>完成上述操作，打开项目文件，从此代码变美丽！</li>
+</ol>
+<h2 id="VSCode-自动格式化代码"><a href="#VSCode-自动格式化代码" class="headerlink" title="VSCode 自动格式化代码"></a>VSCode 自动格式化代码</h2><ul>
+<li><p>安装 EsLint 插件</p>
+</li>
+<li><p>选择<code>File（文件） =&gt; Preference（首选项） =&gt; Settings（设置）</code></p>
+</li>
+<li><p>搜索 eslint</p>
+</li>
+<li><p>点击 Edit in setting.json（在 setting.json 中编辑）</p>
+</li>
+<li><p>添加如下配置（2019 提交的版本）</p>
+<ul>
+<li><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">"eslint.autoFixOnSave": true,</span><br><span class="line">"eslint.validate": [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"language"</span>: <span class="string">"vue"</span>,</span><br><span class="line">        <span class="attr">"autoFix"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"language"</span>: <span class="string">"html"</span>,</span><br><span class="line">        <span class="attr">"autoFix"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"language"</span>: <span class="string">"javascript"</span>,</span><br><span class="line">        <span class="attr">"autoFix"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"language"</span>: <span class="string">"typescript"</span>,</span><br><span class="line">        <span class="attr">"autoFix"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>添加如下配置（2020 提交的版本）</p>
+<ul>
+<li><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"editor.codeActionsOnSave": &#123;</span><br><span class="line">    "source.fixAll.eslint": true,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ESLint-问题汇总"><a href="#ESLint-问题汇总" class="headerlink" title="ESLint 问题汇总"></a>ESLint 问题汇总</h2><h3 id="ESLint-在-VSCode-中不生效"><a href="#ESLint-在-VSCode-中不生效" class="headerlink" title="ESLint 在 VSCode 中不生效"></a>ESLint 在 VSCode 中不生效</h3><p><strong>问题描述</strong><br>VSCode 中 ESLint 插件已正常安装，项目初始化完成，打开项目文件发现 ESLint 不生效。</p>
+<p><strong>产生原因</strong><br>VSCode 中 ESLint 插件默认读取 WORKSPACE 下项目根目录下的<code>.eslintrc.js</code>，请勿将自己创建的项目汇总目录添加至 VSCode 中。</p>
+<p><strong>解决方案</strong><br>项目目录在 VSCode 中外层不要包裹文件夹。<br>正确目录格式：</p>
+<p><img src="/images/eslint_vscode_right_category.png" alt="正确目录格式" title="正确目录格式">  </p>
+<p>错误目录格式：<br><img src="/images/eslint_vscode_err_category.png" alt="错误目录格式" title="错误目录格式">  </p>
+<h3 id="Expected-linebreaks-to-be-‘LF’-but-found-‘CRLF’"><a href="#Expected-linebreaks-to-be-‘LF’-but-found-‘CRLF’" class="headerlink" title="Expected linebreaks to be ‘LF’ but found ‘CRLF’"></a>Expected linebreaks to be ‘LF’ but found ‘CRLF’</h3><p><strong>问题描述</strong><br>文件中报错<code>Expected linebreaks to be &#39;LF&#39; but found &#39;CRLF&#39;</code>。</p>
+<p><strong>产生原因</strong><br>系统换行符异常。</p>
+<p><strong>解决方案</strong><br><code>.eslintrc.js</code>文件中添加下述代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rules: &#123;</span><br><span class="line">    // 解决 Expected linebreaks to be 'LF' but found 'CRLF'. 报错</span><br><span class="line">    "linebreak-style": [0 ,"error", "windows"], </span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2020/03/04/代码规范/ESLint/">http://huishanyi.club/2020/03/04/代码规范/ESLint/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/代码规范/">代码规范</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/03/05/项目实例/Node+Koa搭建服务端/" class="pre">Node+Koa搭建服务端</a><a href="/2020/02/05/系统分析师/计算机组成与结构/" class="next">计算机组成与结构</a></div><div id="comments"><div id="SOHUCS" sid="2020/03/04/代码规范/ESLint/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要使用-ESLint-？"><span class="toc-text">为什么要使用 ESLint ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境"><span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React-项目配置-ESLint"><span class="toc-text">React 项目配置 ESLint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-自动格式化代码"><span class="toc-text">VSCode 自动格式化代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ESLint-问题汇总"><span class="toc-text">ESLint 问题汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ESLint-在-VSCode-中不生效"><span class="toc-text">ESLint 在 VSCode 中不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expected-linebreaks-to-be-‘LF’-but-found-‘CRLF’"><span class="toc-text">Expected linebreaks to be ‘LF’ but found ‘CRLF’</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>

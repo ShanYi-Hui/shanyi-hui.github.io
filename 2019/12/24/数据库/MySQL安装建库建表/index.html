@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="惠善一的博客主要包括对前端技术的分享, 为什么要写博客, ShanYi Hui的blog, 网络日志。"><meta name="baidu-site-verification" content="iXh8j30RO8"><meta name="keywords" content="惠善一, 博客, blog, huishanyi, HuiShanYi, ShanYiHui, ShanYi-Hui"><title>MySQL安装建库建表 | 惠善一的博客</title><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.3"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.3"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">MySQL安装建库建表</h1><a id="logo" href="/.">惠善一的博客</a><p class="description">SumBlog</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">MySQL安装建库建表</h1><div class="post-meta"><a href="/2019/12/24/数据库/MySQL安装建库建表/#comments" class="comment-count"><i id="changyan_count_unit" data-xid="2019/12/24/数据库/MySQL安装建库建表/"></i>留言,<i id="changyan_parti_unit" data-xid="2019/12/24/数据库/MySQL安装建库建表/"></i>参与</a><p><span class="date">Dec 24, 2019</span><span><a href="/categories/后端/" class="category">后端</a></span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>&emsp;&emsp;MySQL 该怎样创建数据库与数据表呢？这篇文章将带你简单的了解如何利用 MySQL Workbench 去建库建表。</p>
+<h2 id="MySQL-简介"><a href="#MySQL-简介" class="headerlink" title="MySQL 简介"></a>MySQL 简介</h2><p>MySQL 是一款开源的关系型数据库管理系统。在 WEB 应用方面，MySQL 是最好的 RDBMS 之一。它将 SQL 语言作为自己的数据库语言，采用双授权政策（社区和商业），其体积小、速度快、成本低，得到了广大开发者的认可。</p>
+<h2 id="MySQL-Workbench-简介"><a href="#MySQL-Workbench-简介" class="headerlink" title="MySQL Workbench 简介"></a>MySQL Workbench 简介</h2><p>MySQL Workbench 是为 MySQL 设计的 ER/数据库建模工具，是一款可视化的数据库设计软件，它为数据库管理员、程序开发者和系统规划师提供可视化设计、模型建立、以及数据库管理功能。<br>它包含了用于创建复杂的数据建模ER模型，正向和逆向数据库工程，也可以用于执行通常需要花费大量时间和需要的难以变更和管理的文档任务。MySQL工作台可在Windows，Linux和Mac上使用。</p>
+<h2 id="MySQL（MySQL-Workbench）-安装"><a href="#MySQL（MySQL-Workbench）-安装" class="headerlink" title="MySQL（MySQL Workbench） 安装"></a>MySQL（MySQL Workbench） 安装</h2><p>MySQL Workbench 集成到 MySQL 中，其实就是在安装 MySQL。</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>进入<a href="https://dev.mysql.com/downloads/workbench/" target="_blank"> MySQL Workbench 下载页面</a>进行安装包下载。<br>下载页面如下图：<br><img src="/images/mysql_workbench_download1.png" alt="MySQL Workbench 下载页面" title="MySQL Workbench 下载页面"></p>
+<p>点击红框标记的“Go to Download Page”按钮，mysql-installer-web-community 为联网安装，mysql-installer-community 为离线安装，为了避免网络所造成的的意外影响，建议下载离线安装包进行安装，安装包为 MySQL 高版本安装包（已集成 MySQL Workbench），如下图：<br><img src="/images/mysql_workbench_download2.png" alt="MySQL 版本选择页面" title="MySQL 版本选择页面"></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>双击下载好的安装包进行安装，弹出步骤窗口，如下图：<br>步骤一：同意 MySQL 协议并点击“Next”进行下一步，不用在意内容，要使用就必须同意（安装过，不会出现此步骤）；<br><img src="/images/mysql_workbench_install1.png" alt="MySQL 版本选择页面" title="MySQL 版本选择页面"></p>
+<p>步骤二：选择安装类型（Choosing a Setup Type），推荐默认开发版本（Developer Default），如下图：<br><img src="/images/mysql_workbench_install2.png" alt="MySQL 版本选择页面" title="MySQL 版本选择页面"></p>
+<p>步骤三：自定义安装路径（Path Conflicts），如下图：<br><img src="/images/mysql_workbench_install3.png" alt="MySQL 安装路径" title="MySQL 安装路径"></p>
+<p>步骤四：检查要求（Check Requirements），如下图：<br><img src="/images/mysql_workbench_install4.png" alt="MySQL 检查要求" title="MySQL 检查要求">  </p>
+<p>点击“Excute”执行，可能会弹出一些官方需要配置的软件，乖乖根据他的提示安装下，毕竟 MySQL 可能依赖这些软件，如下图：<br><img src="/images/mysql_workbench_install5.png" alt="MySQL 安装依赖" title="MySQL 安装依赖"> </p>
+<p>步骤五：安装 MySQL 相关功能模块（包括 MySQL Workbench），点击“Excute”执行，如下图：<br><img src="/images/mysql_workbench_install6.png" alt="MySQL 安装相关功能模块" title="MySQL 安装相关功能模块"> </p>
+<p>安装完成后的模块前面会有个对勾，我们点击“Next”即可，如下图：<br><img src="/images/mysql_workbench_install7.png" alt="MySQL 安装相关功能模块" title="MySQL 安装相关功能模块"> </p>
+<p>步骤六：产品配置描述（Product Configuration），看看就好，点击“Next”下一步，如下图：<br><img src="/images/mysql_workbench_install8.png" alt="MySQL 产品配置描述" title="MySQL 产品配置描述"> </p>
+<p>步骤七：高可用（High Availability），选择第一个，如下图：<br><img src="/images/mysql_workbench_install9.png" alt="MySQL 高可用" title="MySQL 高可用"> </p>
+<p>步骤八：类型与网络（Type and Networking）,首先我们需要选择当前运行设备类型，如下图：<br><img src="/images/mysql_workbench_install10.png" alt="MySQL 类型与网络" title="MySQL 类型与网络"> </p>
+<p>连接设置，默认配置就可以了，我们再勾选下“Show Advanced and Logging Options”提前配置下高级功能<br><img src="/images/mysql_workbench_install11.png" alt="MySQL 类型与网络" title="MySQL 类型与网络"> </p>
+<p>步骤九：身份验证（Authentication Method），8.0 版本以上推荐第一个“Strong Password”，低版本建议升级，如下图：<br><img src="/images/mysql_workbench_install12.png" alt="MySQL 身份验证" title="MySQL 身份验证"> </p>
+<p>步骤十：用户密码设置（Accounts and Roles），设置完成点击“Next”下一步，如下图：<br><img src="/images/mysql_workbench_install13.png" alt="MySQL 用户密码设置" title="MySQL 用户密码设置"> </p>
+<p>步骤十一：Windows 服务（Windows service），MySQL 和 Windows 的那些事，不用操心，小手一抖“Next”下一步，如下图：<br><img src="/images/mysql_workbench_install14.png" alt="MySQL Windows 服务" title="MySQL Windows 服务"> </p>
+<p>步骤十二：日志设置（Logging Options），默认设置就好，直接下一步，这块自行翻译，不会有歧义，如下图：<br><img src="/images/mysql_workbench_install15.png" alt="MySQL 日志设置" title="MySQL 日志设置"> </p>
+<p>步骤十三：高级设置（Advanced Options），暂时使用默认配置，后期使用过程中若需使用相关功能，再更改配置，直接下一步，如下图：<br><img src="/images/mysql_workbench_install16.png" alt="MySQL 高级设置" title="MySQL 高级设置"> </p>
+<p>步骤十四：应用配置（Apply Configuration），点击“Excute”执行，再点击“Finish”完成应用配置，如下图：<br><img src="/images/mysql_workbench_install16.png" alt="MySQL 应用配置" title="MySQL 应用配置"> </p>
+<p>步骤十五：产品配置（Product Configuration）,点击“Next”下一步，如下图：<br><img src="/images/mysql_workbench_install17.png" alt="MySQL 产品配置" title="MySQL 产品配置"> </p>
+<p>步骤十六：路由配置（MySQL Router Configuration），点击“Finish”完成路由配置，如下图：<br><img src="/images/mysql_workbench_install18.png" alt="MySQL 路由配置" title="MySQL 路由配置"> </p>
+<p>步骤十七：连接服务（Connect To Server），输入密码，点击“Check”，会提示连接成功，然后点击“Next”下一步，如下图：<br><img src="/images/mysql_workbench_install19.png" alt="MySQL 连接服务" title="MySQL 连接服务"> </p>
+<p>步骤十八：应用配置（Apply Configuration），参考步骤十四</p>
+<p>步骤十九：安装完成（Installation Complete），点击“Finish”完成安装。<br><img src="/images/mysql_workbench_install20.png" alt="MySQL 连接服务" title="MySQL 连接服务"> </p>
+<h2 id="MySQL-Workbench-创建新连接"><a href="#MySQL-Workbench-创建新连接" class="headerlink" title="MySQL Workbench 创建新连接"></a>MySQL Workbench 创建新连接</h2><p>步骤一：双击 MySQL Workbench 图标打开，若桌面未生成图标，在开始菜单搜索“MySQL Workbench”，即可看到该应用，点击进入，如下图：<br><img src="/images/mysql_workbench_use1.png" alt="进入 MySQL Workbench" title="进入 MySQL Workbench">   </p>
+<p>步骤二：点击下图红框处的加号，创建新的连接：<br><img src="/images/mysql_workbench_use2.png" alt="创建新连接" title="创建新连接">   </p>
+<p>步骤三：填写“Connection Name”连接名，其他为默认值就好，点击红框“Store in Vault…”，如下图：<br><img src="/images/mysql_workbench_use3.png" alt="填写新连接配置" title="填写新连接配置">   </p>
+<p>步骤四：设置密码，如下图：<br><img src="/images/mysql_workbench_use4.png" alt="设置密码" title="设置密码">   </p>
+<p>步骤五：测试新连接是否可用，如下图：<br><img src="/images/mysql_workbench_use5.png" alt="测试新连接" title="测试新连接"></p>
+<p>步骤六：弹出连接成功，点击红框中的两个“OK”就完成创建了，如下图：<br><img src="/images/mysql_workbench_use6.png" alt="创建新连接成功" title="创建新连接成功">  </p>
+<h2 id="MySQL-Workbench-创建数据库"><a href="#MySQL-Workbench-创建数据库" class="headerlink" title="MySQL Workbench 创建数据库"></a>MySQL Workbench 创建数据库</h2><p>步骤一：点击新连接进入，如下图：<br><img src="/images/mysql_workbench_use7.png" alt="进入新连接" title="进入新连接">  </p>
+<p>步骤二：创建数据库并完成数据库配置，如下图：<br><img src="/images/mysql_workbench_use8.png" alt="创建数据库并完成数据库配置" title="创建数据库并完成数据库配置">  </p>
+<p>步骤三：生成 SQL 语句，点击“Apply”应用，如下图：<br><img src="/images/mysql_workbench_use9.png" alt="生成 SQL 语句" title="生成 SQL 语句">   </p>
+<p>步骤四：执行 SQL 语句，点击“Finish”应用，完成创建数据库，如下图：<br><img src="/images/mysql_workbench_use10.png" alt="执行 SQL 语句" title="执行 SQL 语句"> </p>
+<h2 id="MySQL-Workbench-创建数据表"><a href="#MySQL-Workbench-创建数据表" class="headerlink" title="MySQL Workbench 创建数据表"></a>MySQL Workbench 创建数据表</h2><p>步骤一：右键“Tables”，选择创建一个“user”模板数据表，点击“Apply”应用，如下图:<br><img src="/images/mysql_workbench_use11.png" alt="创建数据表" title="创建数据表">   </p>
+<p>步骤二：生成 SQL 语句，点击“Apply”应用，如下图：<br><img src="/images/mysql_workbench_use12.png" alt="生成 SQL 语句" title="生成 SQL 语句">   </p>
+<p>步骤三：执行 SQL 语句，点击“Finish”应用，完成创建数据库，如下图：<br><img src="/images/mysql_workbench_use13.png" alt="执行 SQL 语句" title="执行 SQL 语句"> </p>
+<p>此时就完成了数据库及数据表的创建，如下图：<br><img src="/images/mysql_workbench_use14.png" alt="完成数据库及数据表的创作" title="完成数据库及数据表的创作"> </p>
+<h2 id="数据表编辑"><a href="#数据表编辑" class="headerlink" title="数据表编辑"></a>数据表编辑</h2><p>建议数据表预留 3 个字段，应对之后添加字段难的问题。</p>
+<h3 id="数据表配置介绍"><a href="#数据表配置介绍" class="headerlink" title="数据表配置介绍"></a>数据表配置介绍</h3><ul>
+<li>Table Name：数据表名；</li>
+<li>Schema：数据库名；</li>
+<li>Charset/Collation：字符集/排序规则；</li>
+<li>Engine：存储引擎；</li>
+<li>Comments：描述；</li>
+<li>Column Name：字段名，属性；</li>
+<li>Datatype：数据类型；</li>
+<li>PK：primary key，主键约束（唯一标识，不为空，一个表一个主键）；</li>
+<li>NN：not null，非空；</li>
+<li>UQ：unique，唯一索引（是索引而不是约束，可为空，一个表可以有多个）；</li>
+<li>B：binary，二进制数据（比 text 更大的二进制数据）；</li>
+<li>UN：unsigned，整数（非负数）；</li>
+<li>ZF：zero fill，用0填充剩余位置，例如字段内容是1 int(4), 则内容显示为0001 ；</li>
+<li>AI：auto increment，自增；</li>
+<li>G：generated column，生成列；</li>
+<li>Default/Expression：默认值。</li>
+</ul>
+<h3 id="字符集-排序"><a href="#字符集-排序" class="headerlink" title="字符集/排序"></a>字符集/排序</h3><h4 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h4><p>charset，用来组织、控制或表示数据项的字母、数字以及计算机能识别的符号的集合，不同的字符集可能字符占位大小不同，常用utf8（库中仅含 BMP即Basic Multilingual Plane 的字符，如常规文字图片），utf8mb4（库中含有不在 BMP 中的字符，比如emoji 表情）。  </p>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>collation，为字符集中字符之间的比较、排序制定的规则，顺序需要对应utf8_general_ci，utf8mb4_general__ci。</p>
+<p>以utf8为例分析_ci、_cs、_bin之间的区别：</p>
+<ul>
+<li>utf8_general_ci 不区分大小写，这个你在注册用户名和邮箱的时候就要使用；</li>
+<li>utf8_general_cs 区分大小写，用户名和邮箱用这个就对用户不友好；</li>
+<li>utf8_bin：字符串每个字符用二进制数据编译存储，区分大小写，而且可以存二进制的内容。</li>
+</ul>
+<p>以utf8为例分析含 general 和含 unicode：</p>
+<ul>
+<li>utf8_general_ci校对速度快，但准确度稍差，页面应用足够用。</li>
+<li>utf8_unicode_ci准确度高，但校对速度稍慢。</li>
+</ul>
+<h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><p>engine，MySQL支持数个存储引擎作为对不同表的类型的处理器（页面应用推荐使用 InnoDB）。MySQL 最常用的存储引擎：</p>
+<ul>
+<li>MyISAM：默认的MySQL插件式存储引擎，它是在Web、数据仓储和其他应用环境下最常使用的存储引擎之一。注意，通过更改STORAGE_ENGINE配置变量，能够方便地更改MySQL服务器的默认存储引擎。</li>
+<li>InnoDB：用于事务处理应用程序，具有众多特性，包括ACID事务支持。</li>
+<li>BDB：可替代InnoDB的事务引擎，支持COMMIT、ROLLBACK和其他事务特性。- Memory：将所有数据保存在RAM中，在需要快速查找引用和其他类似数据的环境下，可提供极快的访问。</li>
+<li>Merge：允许MySQL DBA或开发人员将一系列等同的MyISAM表以逻辑方式组合在一起，并作为1个对象引用它们。对于诸如数据仓储等VLDB环境十分适合。</li>
+<li>Archive：为大量很少引用的历史、归档、或安全审计信息的存储和检索提供了完美的解决方案。</li>
+<li>Federated：能够将多个分离的MySQL服务器链接起来，从多个物理服务器创建一个逻辑数据库。十分适合于分布式环境或数据集市环境。</li>
+<li>Cluster/NDB：MySQL的簇式数据库引擎，尤其适合于具有高性能查找要求的应用程序，这类查找需求还要求具有最高的正常工作时间和可用性。</li>
+<li>Other：其他存储引擎包括CSV（引用由逗号隔开的用作数据库表的文件），Blackhole（用于临时禁止对数据库的应用程序输入），以及Example引擎（可为快速创建定制的插件式存储引擎提供帮助）。</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>datatype，根据三大数据选取原则合理选用数据类型可以极大地提高 MySQL 效率，MySQL 支持的数据类型大致分为三类：数值、日期/时间 和 字符串类型。  </p>
+<p>具体请看：<a href="https://huishanyi.club/2020/01/02/数据库/MySQL数据类型选取/" target="_blank">数据类型选取</a>。</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ShanYi Hui</p><p>原文链接: <a href="http://huishanyi.club/2019/12/24/数据库/MySQL安装建库建表/">http://huishanyi.club/2019/12/24/数据库/MySQL安装建库建表/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"><a href="/tags/数据库/">数据库</a><a href="/tags/MySQL/">MySQL</a></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2020/01/02/数据库/MySQL数据类型选取/" class="pre">MySQL数据类型选取</a><a href="/2019/12/18/数据库/数据库简介/" class="next">数据库简介</a></div><div id="comments"><div id="SOHUCS" sid="2019/12/24/数据库/MySQL安装建库建表/"></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-简介"><span class="toc-text">MySQL 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-Workbench-简介"><span class="toc-text">MySQL Workbench 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL（MySQL-Workbench）-安装"><span class="toc-text">MySQL（MySQL Workbench） 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-Workbench-创建新连接"><span class="toc-text">MySQL Workbench 创建新连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-Workbench-创建数据库"><span class="toc-text">MySQL Workbench 创建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-Workbench-创建数据表"><span class="toc-text">MySQL Workbench 创建数据表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据表编辑"><span class="toc-text">数据表编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据表配置介绍"><span class="toc-text">数据表配置介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符集-排序"><span class="toc-text">字符集/排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字符集"><span class="toc-text">字符集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序"><span class="toc-text">排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#存储引擎"><span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/CSRF攻击/">CSRF攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/15/Web安全/XSS攻击/">XSS攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/14/Web性能优化/强缓存和协商缓存/">强缓存和协商缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作字符串/">JS操作字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/13/JS/JS操作数组/">JS操作数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/08/JS/Promise/">Promise</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/NodeJS面试题/">NodeJS面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/Vue面试题/">Vue面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/React面试题/">React面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/29/前端面试题/CSS面试题/">CSS面试题</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Web安全/">Web安全</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web性能优化/">Web性能优化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">25</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统分析师/">系统分析师</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目实例/">项目实例</a><span class="category-list-count">4</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/JS/" style="font-size: 15px;">JS</a> <a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a> <a href="/tags/ES6/" style="font-size: 15px;">ES6</a> <a href="/tags/React/" style="font-size: 15px;">React</a> <a href="/tags/Web性能优化/" style="font-size: 15px;">Web性能优化</a> <a href="/tags/Web安全/" style="font-size: 15px;">Web安全</a> <a href="/tags/代码规范/" style="font-size: 15px;">代码规范</a> <a href="/tags/前端面试题/" style="font-size: 15px;">前端面试题</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/接口/" style="font-size: 15px;">接口</a> <a href="/tags/编辑器/" style="font-size: 15px;">编辑器</a> <a href="/tags/系统分析师/" style="font-size: 15px;">系统分析师</a> <a href="/tags/前言/" style="font-size: 15px;">前言</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/服务端搭建/" style="font-size: 15px;">服务端搭建</a> <a href="/tags/博客搭建/" style="font-size: 15px;">博客搭建</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://xian.yunshipei.com/" title="云适配" target="_blank">云适配</a><ul></ul><a href="https://www.deepcloudsec.com/" title="云深互联" target="_blank">云深互联</a><ul></ul><a href="https://github.com/ShanYi-Hui" title="惠善一的GitHub" target="_blank">惠善一的GitHub</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">ShanYi Hui.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script type="text/javascript">// 向百度推送页面 URL
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();</script><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.3"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.3" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script><script>window._config = { showScore: true };
+(function(){ 
+  var appid = 'cyuk0VGGw'; 
+  var conf = '0bbf833c3126f88b729e02d5b6b060d2'; 
+  var width = window.innerWidth || document.documentElement.clientWidth; 
+  var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+  if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {  
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+  }
+  else { 
+    var loadJs=function(d,a){
+      var b=document.createElement("script");b.setAttribute("type","text/javascript");
+      b.setAttribute("charset","UTF-8");
+      b.setAttribute("src",d);
+      if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+      nodes.appendChild(b)
+    };
+    loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); 
+  } 
+  var loadCss = function(cssString){  
+    var style=document.createElement("style");  
+    style.setAttribute("type", "text/css");  
+    if(style.styleSheet){// IE  
+        style.styleSheet.cssText = cssString;  
+    } else {// w3c  
+        var cssText = document.createTextNode(cssString);  
+        style.appendChild(cssText);  
+    }
+    nodes.appendChild(style);
+  }
+  //- window.onload=function(){
+  //-   if(window.outerWidth<=775){
+  //-     loadCss('.module-hot-topic,.module-cmt-float-bar{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .cbox-prompt-w span.prompt-empty-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w .form-text-w span.text-null,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w a.comment-link-w,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-minwidth-w div.cont-comment-w span.comment-text-w,#SOHUCS #SOHU_MAIN .module-cmt-footer .section-service-w div.service-wrap-w a:hover,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w span.wrap-name-w,#SOHUCS #SOHU_MAIN .module-cmt-list .action-click-gw span.click-disable-eg a em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li div.title-name-gw,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number .comment-number span.cy-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .cmt-list-number span.comment-number,#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active,#SOHUCS #SOHU_MAIN .module-cmt-list .msg-wrap-gw .wrap-action-gw .action-click-gw span a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .picture-box-gw div.box-action-gw a:hover,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-action-gw .action-click-gw span a:hover em.icon-name-bg,#SOHUCS #SOHU_MAIN .module-cmt-list .wrap-user-gw span.user-name-gw a{color:#40759b!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-r,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-l,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-border-r{display:none!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .post-wrap-border-t div.post-wrap-border-t-l{background:#FFF!important;top:-2px!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-function-w .uploading-wrapper-dw div.wrapper-image-dw,#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w div.post-wrap-main,#SOHUCS #SOHU_MAIN .module-cmt-float-bar .wrap-cont-w .cont-form-w div.form-text-w,#SOHUCS #SOHU_MAIN .module-cmt-header .section-cbox-w .block-head-w div.header-login,#SOHUCS #SOHU_MAIN .module-cmt-list .module-cmt-box .post-wrap-w div.post-wrap-main{border:1px solid #e6e6e6!important;border-radius:20px 20px 20px 20px;margin:0!important}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw{width:130px!important;height:34px!important;line-height:33px!important;font-size:17px!important;background:#5483b1!important;border-radius:20px!important;color:#FFF!important;-webkit-box-shadow:0 -1px 4px #5483b1 inset;box-shadow:0 -1px 10px #5483b1 inset}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a .btn-fw:before{content:"发表评论"}#SOHUCS #SOHU_MAIN .module-cmt-box .post-wrap-w .wrap-action-w .action-issue-w .issue-btn-w a:hover .btn-fw{color:#40759b!important;background:#FFF!important}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li{background:none!important;border-bottom:1px solid #e6e6e6}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type .type-lists li.active{border:1px solid #e6e6e6;border-radius:10px 10px 0 0;border-bottom:none}#SOHUCS #SOHU_MAIN .module-cmt-list .block-title-gw ul li .title-name-gw div.title-name-gw-tag{background:#5483b1!important;border-radius:3px}#SOHUCS #SOHU_MAIN .module-cmt-list .cmt-list-type div.cmt-list-border{background-color:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item{border:1px solid #e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo{text-align:center;line-height:40px;border-radius:50%!important;background:#e6e6e6!important}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item .nt-logo:before{content:"畅";font-size:22px;color:#FFF}#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text,#SOHUCS #SOHU_MAIN .module-cmt-notice ul.nt-list li.nt-item a.nt-text i{color:#5483b1!important}#SOHUCS #SOHU_MAIN .module-cmt-header .section-title-w .title-user-w .user-wrap-w{background:#FFF!important}@media screen and (min-width:900px){#SOHUCS #SOHU_MAIN .module-mobile-cmt-list .list-wrapper-wap .list-container-wap .list-item-wap .list-content-wrapper-wap .cmt-list-image-container .cmt-list-image{max-width: 100%;}}');
+  //-   }
+  //- };
+})();
+function removeElement(_element){
+     var _parentElement = _element.parentNode;
+     if(_parentElement){
+            _parentElement.removeChild(_element);
+     }
+}
+var removeAD = document.createElement("div");
+removeAD.id = 'removeAD';
+var adInterval1 = setInterval(function() {
+  if(document.querySelector("#feedAv")){
+    document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+    document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+    //- removeElement(document.querySelectorAll("#feedAv")[0]);
+    var feedAv = document.querySelector("#feedAv").children;
+    for( item of feedAv){
+      item.style.display = 'none'
+    }
+    document.querySelector("#removeAD").style.display="none"
+    clearInterval(adInterval1);
+  }
+},1000);
+var adInterval2 = setInterval(function() {
+  if(document.querySelector("#pop_ad")){
+    removeElement(document.querySelector("#pop_ad"));
+    clearInterval(adInterval2);
+  }
+}, 1000);</script><script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script><script type="text/javascript">//- 去畅言评论
+let $comments = document.getElementById('comments')
+if($comments)
+  setTimeout('deleteAD()',2000)
+  function deleteAD(){
+    let ads = document.querySelectorAll('#feedAv')
+    if(ads.length>5){
+      for(var i=0; i<ads.length; i++){
+        ads[i].removeAttribute('style')
+        if(i==(ads.length-1) && !ads[i].style.height) console.log('postsAD has been cleaned!')
+      }
+    }else{
+      setTimeout('deleteAD()',2000)
+    }
+  }</script></body></html>
