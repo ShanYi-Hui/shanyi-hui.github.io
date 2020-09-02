@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://huishanyi.club/"/>
-  <updated>2020-07-18T12:32:13.349Z</updated>
+  <updated>2020-09-02T23:40:30.477Z</updated>
   <id>http://huishanyi.club/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器渲染页面过程</title>
+    <link href="http://huishanyi.club/2020/09/03/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2%E8%BF%87%E7%A8%8B/"/>
+    <id>http://huishanyi.club/2020/09/03/Web性能优化/浏览器渲染页面过程/</id>
+    <published>2020-09-02T22:10:15.000Z</published>
+    <updated>2020-09-02T23:40:30.477Z</updated>
+    
+    <content type="html"><![CDATA[<p>&emsp;&emsp;用户在浏览器地址栏输入网址 到 页面加载完成，发生了什么？</p><ol><li><p>客户端地址栏输入网址；</p><ul><li>举个小白的例子：<code>小白（域名）</code>在一家<code>大公司（云厂商）</code>上班，有天<code>小红（客户端）</code>来看小白。</li></ul></li><li><p>域名解析；</p><ul><li>也叫DNS解析，云厂商将域名转化为 IP 地址，IP 才是网站真正的网络地址；</li><li>接着奏乐接着舞：可他到了小白的公司，发现找不到小白，于是去找<code>前台小姐姐（DNS解析）</code>，小姐姐查了查<code>小白的工位（IP）</code>，查到后告诉了小红。</li></ul></li><li><p>TCP “三次握手”；</p><ul><li>通过“三次握手”建立 TCP 连接，这里的三次是<code>建立连接成功</code>最少的通讯次数；</li><li>接着奏乐接着舞：<ol><li>第一次握手：小红到了办公室门口，有门禁，敲门后说：“<code>小白你在里面吗？我是小红。</code>”；</li><li>第二次握手：小白说：“<code>我在，你是那个小红啊？</code>”；</li><li>第三次握手：小红说：“<code>我是和你在东北玩泥巴的小红啊！</code>”，假设此时小白已认可小红。</li></ol></li></ul></li><li><p>客户端发送请求；</p><ul><li>请求页面数据（一般会存在多次请求，html，css，js，图片······）</li><li>接着奏乐接着舞：小红将<code>目光（接口）</code>转向<code>大方脸，大眼睛，大红唇（请求参数）</code>的小白。</li></ul></li><li><p>服务器端响应；</p><ul><li>服务器端接口收到请求，给予响应；</li><li>接着奏乐接着舞：小白发现自己被看着，站了起来（<code>小白现在的样子（响应数据）</code>已经通过<code>目光（接口）</code>展现在<code>小红的眼里、心里和深深脑海里（响应数据传递到客户端）</code>）。</li></ul></li><li><p>页面渲染；</p><ul><li><p>主要分为 DOM =&gt; CSSDOM =&gt; RenderTree =&gt; Layout =&gt; Painting =&gt; Display；</p></li><li><p>接着奏乐接着舞：小红和小白曾经在一起的经历<code>一一回想（逐步渲染）</code>，<code>完整的小白呈现（页面渲染完成。老子说过：只有躯壳的人是不完整的。）</code>。</p><p>更新中（将会详细剖析2到5阶段）······</p></li></ul></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&amp;emsp;&amp;emsp;用户在浏览器地址栏输入网址 到 页面加载完成，发生了什么？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;客户端地址栏输入网址；&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;举个小白的例子：&lt;code&gt;小白（域名）&lt;/code&gt;在一家&lt;code&gt;大公司（云厂商）&lt;/code&gt;上班，
+      
+    
+    </summary>
+    
+      <category term="Web性能优化" scheme="http://huishanyi.club/categories/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+    
+      <category term="Web性能优化" scheme="http://huishanyi.club/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>CSRF攻击</title>
@@ -221,7 +250,7 @@
     <link href="http://huishanyi.club/2020/05/29/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/React%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <id>http://huishanyi.club/2020/05/29/前端面试题/React面试题/</id>
     <published>2020-05-28T23:52:13.000Z</published>
-    <updated>2020-07-19T22:09:48.762Z</updated>
+    <updated>2020-08-24T00:15:43.722Z</updated>
     
     <content type="html"><![CDATA[<p>&emsp;&emsp;本片文章将会每周不定期更新不定数量面试题，毕竟质量才是关键。<br>&emsp;&emsp;实践是检验真理的唯一标准！看题不记题，看题要做题！<br>&emsp;&emsp;面试是一个学习交流的过程，抱着虚心求教的心，人无完人，祝你变得更优秀！</p><h2 id="React-中对-key-的理解"><a href="#React-中对-key-的理解" class="headerlink" title="React 中对 key 的理解"></a>React 中对 key 的理解</h2><p><strong>作用</strong>  </p><ul><li>key 是虚拟 DOM 中的唯一标识<ul><li>Diff 算法可以更快的找到对应的新旧元素节点，从而提高 Diff 运算效率；</li><li>key 值保证了元素渲染后的更新效果；</li><li>遍历的元素没有 key 属性会报警告。</li></ul></li></ul><p><strong>场景</strong>  </p><ul><li>遍历的元素就要用 key</li></ul><p><strong>原理</strong>  </p><ul><li>采用 Diff 算法</li></ul><p><strong>注意</strong>  </p><ul><li>key 是唯一标识，切记不要使用遍历的 index 值<ul><li>使用 index 作为 key 会导致额外的性能消耗；</li><li>使用 index 作为 key 会导致渲染出错。</li></ul></li><li>React 要求遍历元素必须使用 key，但不使用没有报 error 而是 warning<ul><li>React 默认（子组件无状态变化，为定值，不存在动态值如 input 输入框）为无 key 的遍历元素加 key，值为 index。</li></ul></li><li>key 的唯一性是存在与兄弟（React 不存在表兄弟，堂兄弟）元素间<ul><li>举个例子：老王有 3 个娃（小明，小红，小黑），老李也有 3 个娃（小明，小红，小黑），但是他俩的 3 个娃不需要标记（姓就不同）。</li></ul></li><li>key 不能是随机数（key 应唯一且稳定，无论遍历几次 key 都不会变）<ul><li>举个例子：老王带着 3 个娃（小明，小红，小黑）报班，报成功了，第二天送娃（娃改名字了，小亮、小赤、小暗）去上课，补课班（React）报班人太多，记不清孩子样子，只认登记的名字，很尴尬老王又报了一次名，多浪费了一次钱（额外的性能消耗）。</li></ul></li></ul><h2 id="React-中-Diff-算法的理解"><a href="#React-中-Diff-算法的理解" class="headerlink" title="React 中 Diff 算法的理解"></a>React 中 Diff 算法的理解</h2><p>详细请看 <a href="/2019/09/23/React/React虚拟DOM/" target="_blank">React虚拟DOM</a>。</p><ul><li>Diff 算法为虚拟 DOM 而生，可以更快的找到对应的新旧元素节点，从而提高 Diff 运算效率；</li><li>Diff 算法比较方式：深度优先，同层比较；</li><li>React 中的 Diff 算法基于两个假设<ol><li>两个不同类型的元素会产生出不同的树；</li><li>开发者可以通过 key 属性来暗示哪些子元素在不同的渲染下能保持稳定；</li></ol></li></ul><p><strong>分析方法</strong></p><ul><li>_updateChildren() 方法</li></ul><h2 id="React-生命周期的理解"><a href="#React-生命周期的理解" class="headerlink" title="React 生命周期的理解"></a>React 生命周期的理解</h2><p>详细请看 <a href="/2019/11/18/React/React生命周期/" target="_blank">React生命周期</a>。</p><ul><li>React 15<ul><li>constructor()：初始化 props 和 state<ul><li>super(props) 获取来自父组件传来的参数</li><li>this.state 初始状态</li></ul></li><li>componentWillMount()：组件将进行渲染钩子</li><li>render()：组件渲染钩子</li><li>componentDidMount()：组件渲染完成钩子，此处进行数据请求</li><li>componentWillReceiveProps()：组件将接收参数钩子，props 改变引起的组件更新</li><li>shouldComponentUpdate(nextProps，nextState)：组件是否应该更新钩子，可以在此处对比前后的 state 与 props，来判断是否更新组件，做性能优化</li><li>componentDidUpdate(prevProps, prevState)：组件更新完成钩子</li><li>componentWillUnmount()：组件即将卸载钩子，在此处进行取消订阅，避免内存泄漏</li></ul></li><li>React 16.4<ul><li>constructor()：初始化 props 和 state<ul><li>super(props) 获取来自父组件传来的参数</li><li>this.state 初始状态</li></ul></li><li>render()：组件渲染钩子</li><li>componentDidMount()：组件渲染完成钩子，此处进行数据请求</li><li>static getDerivedStateFromProps()：从 props 中获取 state，贯穿 constructor 与 shouldComponentUpdate 之间，必须用 static 生命，否则会被忽略</li><li>shouldComponentUpdate(nextProps，nextState)：组件是否应该更新钩子，可以在此处对比前后的 state 与 props，来判断是否更新组件，做性能优化</li><li>getSnapshotBeforeUpdate(prevProps, prevState)：更新前获取快照，在最近一次渲染输出（提交到 DOM 节点）之前调用，并返回 null 或者 snapshort（snapshort 会传递给 componentDidUpdate()）</li><li>componentDidUpdate(prevProps, prevState, snapshot)：组件更新完成钩子，snapshot 为 getSnapshotBeforeUpdate() 传递而来</li><li>componentWillUnmount()：组件即将卸载钩子，在此处进行取消订阅，避免内存泄漏</li></ul></li><li>React 16.8+（Hook）<ul><li>useState()：初始化 state，代替 constructor 中的 this.state</li><li>render()：组件渲染钩子</li><li>useEffect()：代替 componentDidMount, componentDidUpdate, componentWillUnmount，由此可见该方法时发生在渲染后</li><li>useMemo()：代替 shouldComponentUpdate()，使用备忘录，记忆组件之前的状态，当更新时该组件状态不变，则跳过本次渲染</li><li>useLayoutEffect()：useEffect 出错时使用，发生于渲染前，毕竟布局是要在渲染前开始的</li></ul></li></ul><h2 id="React-refs-的理解"><a href="#React-refs-的理解" class="headerlink" title="React refs 的理解"></a>React refs 的理解</h2><h2 id="React-事件系统的理解"><a href="#React-事件系统的理解" class="headerlink" title="React 事件系统的理解"></a>React 事件系统的理解</h2><h2 id="setState-的理解"><a href="#setState-的理解" class="headerlink" title="setState 的理解"></a>setState 的理解</h2><h2 id="React-的组件通信方式"><a href="#React-的组件通信方式" class="headerlink" title="React 的组件通信方式"></a>React 的组件通信方式</h2><h2 id="谈谈对函数组件与-class-组件的理解"><a href="#谈谈对函数组件与-class-组件的理解" class="headerlink" title="谈谈对函数组件与 class 组件的理解"></a>谈谈对函数组件与 class 组件的理解</h2><h2 id="React-性能优化方案"><a href="#React-性能优化方案" class="headerlink" title="React 性能优化方案"></a>React 性能优化方案</h2>]]></content>
     
@@ -234,6 +263,10 @@
     
     </summary>
     
+      <category term="前端" scheme="http://huishanyi.club/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端面试题" scheme="http://huishanyi.club/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     
   </entry>
   
@@ -497,31 +530,6 @@
     
     
       <category term="系统分析师" scheme="http://huishanyi.club/tags/%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90%E5%B8%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>“一万年”未碰博客有感</title>
-    <link href="http://huishanyi.club/2020/02/02/%E9%9A%8F%E7%AC%94/%E2%80%9C%E4%B8%80%E4%B8%87%E5%B9%B4%E2%80%9D%E6%9C%AA%E7%A2%B0%E5%8D%9A%E5%AE%A2%E6%9C%89%E6%84%9F/"/>
-    <id>http://huishanyi.club/2020/02/02/随笔/“一万年”未碰博客有感/</id>
-    <published>2020-02-02T02:38:25.000Z</published>
-    <updated>2020-07-07T21:45:28.636Z</updated>
-    
-    <content type="html"><![CDATA[<p>&emsp;&emsp;“一万年”没有更新博客了，年后爆发的冠状病毒使假期不断延长（原本为1月30号，后来变成了2月2号，又后来变为了2月9号），可我却未更新一篇博客，真的是没有时间吗？直到这最后一天假（2月3号开始远成办公，感谢我们的总经理和人事在这么危险的时候跑到公司为我们开机进行远程调试），看到工作群里老板发的一篇PPT，里面有博客链接，突然刺痛了我，我的博客呢？！。</p><p>&emsp;&emsp;我承认有太多的担心，每天醒来第一件事就是看病毒传染实时动态，可并不代表我没有时间，过年的轻松已经让我忘了还有更新博客的习惯（或许还并没有成为真正的习惯），更新博客还需要外界去提醒，可笑。</p><p>&emsp;&emsp;3分钟热度，我是存在的，可讨厌它也喜欢它，讨厌它是因为做一件事很难坚持，喜欢它是因为在高中发现它后我就开始不断地定小目标，有点像代码拆分，哈哈哈。但是有时候定的小目标并不小，时间也挺长，那么我就得找个开始的点（2月2号创建，2月3号发布），有了开始的点就得有对应的结束点（下一次过年），这样我就在一个时间区段中工作，类似于上学、上班的时候你不能迟到、不能早退等规矩，那么我就成功的将不太小的目标拆分成一个个可实施性更强的小目标。</p><p>&emsp;&emsp;之前总认为博客中的随笔是浪费时间，有的人随笔总是在记录生活中的琐碎，有的人则是被刺破后突发的感想，显然我是后者，有点像“盗梦空间”给自己做的自我暗示。</p><p>&emsp;&emsp;“一万年”没有更新博客了，这不来了嘛！我要加油！武汉加油！中国加油！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&amp;emsp;&amp;emsp;“一万年”没有更新博客了，年后爆发的冠状病毒使假期不断延长（原本为1月30号，后来变成了2月2号，又后来变为了2月9号），可我却未更新一篇博客，真的是没有时间吗？直到这最后一天假（2月3号开始远成办公，感谢我们的总经理和人事在这么危险的时候跑到公司为
-      
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://huishanyi.club/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://huishanyi.club/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
